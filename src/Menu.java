@@ -7,6 +7,7 @@ public class Menu
 
     public void mainMenu()
     {
-        System.out.println("Velkommen til Svømmeklubben Delfinens oprettelsessystem: ");
+        System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
+
     }
 }
