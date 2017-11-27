@@ -15,10 +15,10 @@ public class UserContainer
     }
 
     private void initializeUsers(){
-        users.add(new User("1234","1234", "dumdum", UserRole.FOREMAN));
-        users.add(new User("134","1234", "dumdum", UserRole.FOREMAN));
-        users.add(new User("12346","1234", "dumdum", UserRole.FOREMAN));
-        users.add(new User("123","1234", "dumdum", UserRole.FOREMAN));
-        users.add(new User("12345","1234", "dumdum", UserRole.FOREMAN));
+        users.add(new User("forman","1234", "Freja", UserRole.FOREMAN));
+        users.add(new User("brit","1234", "Brit", UserRole.CASSIR));
+        users.add(new User("else","1234", "Else", UserRole.CASSIR));
+        users.add(new User("lars","1234", "Lars", UserRole.TRAINER));
+        users.add(new User("john","1234", "John", UserRole.TRAINER));
     }
 }

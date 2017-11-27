@@ -8,6 +8,7 @@ public class Menu
     private Scanner scanner = new Scanner(System.in);
     private UserContainer userContainer = new UserContainer();
     private User user = null;
+    Container container = new Container();
 
 
 
@@ -23,33 +24,24 @@ public class Menu
             String validUserName = scanner.nextLine();
             System.out.println("Indtast kodeord:");
             String validUserPass = scanner.nextLine();
-            try
+                try
+                {
+                    user = userLogin(validUserName, validUserPass);
+
+                }
+                catch (IllegalArgumentException eIA)
+                {
+                    System.out.println("Forkert bruger eller pass");
+                    continue;
+                }
+
+            if (user.getUserRole() == UserRole.FOREMAN)
             {
-                user = userLogin(validUserName, validUserPass);
-            } catch (IllegalArgumentException eIA) {
-                System.out.println("Forkert bruger eller pass");
-                continue;
+                makeForemanMenu();
             }
-            if (user != null)
-            {
-                selecter = 1;
-            }else
+            else
             {
                 continue;
-            }
-
-            switch (selecter)
-            {
-                case 0:
-
-                    break;
-
-                case 1:
-                    System.out.println("Velkommen " + user.getName());
-                    isRunning = false;
-                    break;
-
-
             }
 
 
@@ -61,7 +53,7 @@ public class Menu
         ArrayList<User> users = userContainer.getUsers();
         for (int i = 0; i < users.size() ; i++)
         {
-            // siger mit Kunde object er mit kunde array
+
             User tempUser = users.get(i);
 
             if (username.equals(tempUser.getUserLoginName()) && userpass.equals(tempUser.getUserPass()))
@@ -72,6 +64,51 @@ public class Menu
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public void makeForemanMenu ()
+    {
+        if (user.getUserRole() == UserRole.FOREMAN)
+        {
+            System.out.println("This is the Foreman menu");
+            System.out.println("Velkommen " + user.getName());
+            System.out.println("1. Opret medlem");
+            System.out.println("2. Rediger medlem");
+
+            selecter = scanner.nextInt();
+            switch (selecter)
+            {
+                case 1:
+                    System.out.println("Opret medlem");
+                    container.newSwimmer();
+                    break;
+                case 2:
+                    System.out.println("Rediger medlem");
+                    break;
+
+                default:
+                    isRunning = false;
+                    break;
+
+            }
+        }
+    }
+
+    public void makeCashirMenu()
+    {
+        if (user.getUserRole() == UserRole.CASSIR)
+        {
+            System.out.println("This is the Cashir menu");
+        }
+    }
+
+    public void makeTrainerMenu ()
+    {
+        if (user.getUserRole() == UserRole.TRAINER)
+        {
+            System.out.println("This is the Trainer menu");
+        }
+
     }
 
 

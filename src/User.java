@@ -22,12 +22,17 @@ public class User
 
     public String getUserPass()
     {
-        return userPass;
+        return this.userPass;
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
+    }
+
+    public UserRole getUserRole()
+    {
+        return this.userRole;
     }
 }
 
