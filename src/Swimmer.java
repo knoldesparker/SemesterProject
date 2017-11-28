@@ -48,11 +48,6 @@ public class Swimmer {
                 ", crawlPB=" + crawlPB +
                 ", backstrokePB=" + backstrokePB +
                 ", breaststrokePB=" + breaststrokePB +
-<<<<<<< HEAD
                 ", dogPaddlePB=" + dogPaddlePB + "\n";
-=======
-                ", dogPaddlePB=" + dogPaddlePB +
-                "}";
->>>>>>> master
     }
 }

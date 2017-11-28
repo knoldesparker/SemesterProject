@@ -144,6 +144,13 @@ public class Menu
         if (user.getUserRole() == UserRole.TRAINER)
         {
             System.out.println("This is the Trainer menu");
+            System.out.println();
+
+                selecter = scanner.nextInt();
+                while (isRunning)
+                {
+
+                }
         }
 
     }
