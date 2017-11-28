@@ -5,7 +5,7 @@ public class Swimmer {
     private String address;
     private int age;
     private MembershipType membershipType;
-    private int price;
+    private double price;
     private ArrayList<TrainingResult> trainingResults = new ArrayList<>();
     private TrainingResult butterflyPB;
     private TrainingResult crawlPB;
@@ -19,22 +19,18 @@ public class Swimmer {
         this.age = age;
         this.membershipType = membershipType;
 
-        switch (membershipType) {
-            case PASSIVE:
-                this.price = 500;
-                break;
-            case ACTIVE_JUNIOR:
+        if (this.membershipType != MembershipType.PASSIVE) {
+            if (age < 18) {
                 this.price = 1000;
-                break;
-            case ACTIVE_SENIOR:
+            } else {
                 this.price = 1600;
-                break;
-            case ACTIVE_PENSIONER:
-                this.price = 1200;
-                break;
-            case PASSIVE_PENSIONER:
-                this.price = 375;
-                break;
+            }
+        } else {
+            this.price = 500;
+        }
+
+        if (this.age >= 60) {
+            this.price = this.price * 0.75;
         }
     }
 
@@ -53,6 +49,6 @@ public class Swimmer {
                 ", backstrokePB=" + backstrokePB +
                 ", breaststrokePB=" + breaststrokePB +
                 ", dogPaddlePB=" + dogPaddlePB +
-                '}';
+                "}";
     }
 }
