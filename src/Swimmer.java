@@ -52,7 +52,6 @@ public class Swimmer {
                 ", crawlPB=" + crawlPB +
                 ", backstrokePB=" + backstrokePB +
                 ", breaststrokePB=" + breaststrokePB +
-                ", dogPaddlePB=" + dogPaddlePB +
-                '}';
+                ", dogPaddlePB=" + dogPaddlePB + "\n";
     }
 }
