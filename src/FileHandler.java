@@ -7,8 +7,7 @@ public class FileHandler {
         try {
             File file = new File(path);
             FileOutputStream fos = new FileOutputStream(file);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(swimmers);
             oos.close();
@@ -30,8 +29,7 @@ public class FileHandler {
         // Create a read stream from a file by a File and FileInputStream
         try {
             FileInputStream fis = new FileInputStream(new File(path));
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            ObjectInputStream ois = new ObjectInputStream(bis);
+            ObjectInputStream ois = new ObjectInputStream(fis);
 
             tempSwimmers = (ArrayList<Swimmer>) ois.readObject();
             ois.close();

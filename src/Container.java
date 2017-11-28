@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Container {
     ArrayList<Swimmer> swimmers = new ArrayList<>();
-    FileHandler fh = new FileHandler();
+//    FileHandler fh = new FileHandler();
 
     public void newSwimmer() {
-        swimmers = fh.readFromFile("swimmers.txt");
+//        swimmers = fh.readFromFile("swimmers.txt");
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Skriv venligst dit navn: ");
@@ -42,12 +42,13 @@ public class Container {
                 membershipType = MembershipType.PASSIVE;
                 break;
         }
+
         swimmers.add(new Swimmer(name, address, age, membershipType));
         for (Swimmer swimmer:swimmers) {
             System.out.println(swimmer);
         }
         System.out.println();
-        fh.writeToFile(swimmers, "swimmers.txt");
+//        fh.writeToFile(swimmers, "swimmers.txt");
     }
 
 

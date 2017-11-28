@@ -1,29 +1,24 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu
-{
-    private int selecter;
+public class Menu {
+    private int selector;
     private boolean isRunning = true;
     private Scanner scanner = new Scanner(System.in);
     private UserContainer userContainer = new UserContainer();
     private User user = null;
     Container container = new Container();
 
-
-
-    public void mainMenu()
-    {
-        while (isRunning)
-        {
+    public void mainMenu() {
+//        container.swimmers = container.fh.readFromFile("swimmers.txt");
+        while (isRunning) {
 
             System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
             System.out.println("Indtast Brugernavn:");
             String validUserName = scanner.nextLine();
             System.out.println("Indtast kodeord:");
             String validUserPass = scanner.nextLine();
-                try
-                {
+                try {
                     user = userLogin(validUserName, validUserPass);
                 }
                 catch (IllegalArgumentException eIA)
@@ -40,16 +35,13 @@ public class Menu
         }
     }
     //returnerer kunde hvis korrekt, returnerer null hvis forkert
-    public User userLogin (String username, String userpass)
-    {
+    public User userLogin (String username, String userpass) {
         ArrayList<User> users = userContainer.getUsers();
-        for (int i = 0; i < users.size() ; i++)
-        {
+        for (int i = 0; i < users.size() ; i++) {
 
             User tempUser = users.get(i);
 
-            if (username.equals(tempUser.getUserLoginName()) && userpass.equals(tempUser.getUserPass()))
-            {
+            if (username.equals(tempUser.getUserLoginName()) && userpass.equals(tempUser.getUserPass())) {
                 System.out.println(username);
                 System.out.println(userpass);
                 return users.get(i);
@@ -58,12 +50,9 @@ public class Menu
         throw new IllegalArgumentException();
     }
 
-    public void makeForemanMenu ()
-    {
-        if (user.getUserRole() == UserRole.FOREMAN)
-        {
-            while (isRunning)
-            {
+    public void makeForemanMenu () {
+        if (user.getUserRole() == UserRole.FOREMAN) {
+            while (isRunning) {
 
                 System.out.println("This is the Foreman menu");
                 System.out.println("Velkommen " + user.getName());
@@ -73,8 +62,8 @@ public class Menu
                 System.out.println("4. Tilføj Træningsresultat");
                 System.out.println("5. Tilføj Stævne");
 
-                selecter = scanner.nextInt();
-                switch (selecter)
+                selector = scanner.nextInt();
+                switch (selector)
                 {
                     case 1:
                         System.out.println("Opret medlem");
@@ -86,7 +75,6 @@ public class Menu
                         break;
 
                     case 3:
-                        ;
                         System.out.println("Se medlemmer");
                         System.out.println(container.swimmers);
                         break;
@@ -121,8 +109,8 @@ public class Menu
                 System.out.println("1. Se Restance");
                 System.out.println("2. Se medlemmer");
 
-                selecter = scanner.nextInt();
-                switch (selecter)
+                selector = scanner.nextInt();
+                switch (selector)
                 {
                     case 1:
                         System.out.println("Se Restance");
@@ -148,7 +136,7 @@ public class Menu
             System.out.println("This is the Trainer menu");
             System.out.println();
 
-                selecter = scanner.nextInt();
+                selector = scanner.nextInt();
                 while (isRunning)
                 {
 
