@@ -15,40 +15,38 @@ public class Container
         String address = scanner.nextLine();
         System.out.println("Skriv venligst din alder: ");
         int age = scanner.nextInt();
-        System.out.println("Vælg venligst hvorvidt du ønsker [1]aktivt eller [2]passivt medlemskab: ");
+        System.out.println("Vælg venligst hvorvidt du ønsker at være [1]konkurrencesvømmer, [2]motionssvømmer eller " +
+                "have et [3]passivt medlemskab: ");
         int answer = scanner.nextInt();
         MembershipType membershipType = null;
-        switch (answer)
-        {
+
+        switch (answer) {
             case 1:
-                if (age < 18)
-                {
-                    membershipType = MembershipType.ACTIVE_JUNIOR;
-                }
-                else if (age >= 60)
-                {
-                    membershipType = MembershipType.ACTIVE_PENSIONER;
-                }
-                else
-                {
-                    membershipType = MembershipType.ACTIVE_SENIOR;
+                if (age < 18) {
+                    membershipType = MembershipType.COMPETITION_JUNIOR;
+                } else {
+                    membershipType = MembershipType.COMPETITION_SENIOR;
                 }
                 break;
 
             case 2:
-                if (age >= 60)
-                {
-                    membershipType = MembershipType.PASSIVE_PENSIONER;
+                if (age < 18) {
+                    membershipType = MembershipType.EXERCISE_JUNIOR;
+                } else {
+                    membershipType = MembershipType.EXERCISE_SENIOR;
                 }
-                else
-                {
-                    membershipType = MembershipType.PASSIVE;
-                }
+                break;
+
+
+            case 3:
+                membershipType = MembershipType.PASSIVE;
                 break;
         }
         swimmers.add(new Swimmer(name, address, age, membershipType));
-        System.out.println(swimmers);
-
+        for (Swimmer swimmer:swimmers) {
+            System.out.println(swimmer);
+        }
+        System.out.println();
     }
 
 
