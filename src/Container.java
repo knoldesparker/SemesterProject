@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Container
-{
+public class Container {
     ArrayList<Swimmer> swimmers = new ArrayList<>();
+    FileHandler fh = new FileHandler();
 
-
-    public void newSwimmer()
-    {
+    public void newSwimmer() {
+        swimmers = fh.readFromFile("swimmers.txt");
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Skriv venligst dit navn: ");
         String name = scanner.nextLine();
         System.out.println("Skriv venligst din adresse: ");
@@ -47,6 +47,7 @@ public class Container
             System.out.println(swimmer);
         }
         System.out.println();
+        fh.writeToFile(swimmers, "swimmers.txt");
     }
 
 
