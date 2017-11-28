@@ -31,11 +31,9 @@ public class Menu
                     System.out.println("Forkert bruger eller pass");
                     continue;
                 }
-
-                if (user.getUserRole() == UserRole.FOREMAN)
-                {
                     makeForemanMenu();
-                }
+                    makeCashirMenu();
+
 
 
 
@@ -71,6 +69,9 @@ public class Menu
                 System.out.println("Velkommen " + user.getName());
                 System.out.println("1. Opret medlem");
                 System.out.println("2. Rediger medlem");
+                System.out.println("3. Se medlemmer");
+                System.out.println("4. Tilføj Træningsresultat");
+                System.out.println("5. Tilføj Stævne");
 
                 selecter = scanner.nextInt();
                 switch (selecter)
@@ -83,6 +84,19 @@ public class Menu
                     case 2:
                         System.out.println("Rediger medlem");
                         break;
+
+                    case 3:
+                        ;
+                        System.out.println("Se medlemmer");
+                        System.out.println(container.swimmers);
+                        break;
+
+                    case 4:
+                        System.out.println("Tilføj Træning");
+                        break;
+
+                    case 5:
+                        System.out.println("Tilføj Stævne");
 
                     default:
                         isRunning = false;
@@ -100,7 +114,30 @@ public class Menu
     {
         if (user.getUserRole() == UserRole.CASSIR)
         {
-            System.out.println("This is the Cashir menu");
+            while (isRunning)
+            {
+                System.out.println("This is the Cashir menu");
+                System.out.println("Velkommen " + user.getName());
+                System.out.println("1. Se Restance");
+                System.out.println("2. Se medlemmer");
+
+                selecter = scanner.nextInt();
+                switch (selecter)
+                {
+                    case 1:
+                        System.out.println("Se Restance");
+                        break;
+
+                    case 2:
+                        System.out.println("Se medlemmer");
+                        break;
+
+                        default:
+                            isRunning = false;
+                            break;
+                }
+            }
+
         }
     }
 
@@ -109,6 +146,13 @@ public class Menu
         if (user.getUserRole() == UserRole.TRAINER)
         {
             System.out.println("This is the Trainer menu");
+            System.out.println();
+
+                selecter = scanner.nextInt();
+                while (isRunning)
+                {
+
+                }
         }
 
     }
