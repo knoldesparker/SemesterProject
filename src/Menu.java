@@ -14,8 +14,6 @@ public class Menu
 
     public void mainMenu()
     {
-
-
         while (isRunning)
         {
 
@@ -27,7 +25,6 @@ public class Menu
                 try
                 {
                     user = userLogin(validUserName, validUserPass);
-
                 }
                 catch (IllegalArgumentException eIA)
                 {
@@ -35,14 +32,11 @@ public class Menu
                     continue;
                 }
 
-            if (user.getUserRole() == UserRole.FOREMAN)
-            {
-                makeForemanMenu();
-            }
-            else
-            {
-                continue;
-            }
+                if (user.getUserRole() == UserRole.FOREMAN)
+                {
+                    makeForemanMenu();
+                }
+
 
 
         }
@@ -70,29 +64,37 @@ public class Menu
     {
         if (user.getUserRole() == UserRole.FOREMAN)
         {
-            System.out.println("This is the Foreman menu");
-            System.out.println("Velkommen " + user.getName());
-            System.out.println("1. Opret medlem");
-            System.out.println("2. Rediger medlem");
-
-            selecter = scanner.nextInt();
-            switch (selecter)
+            while (isRunning)
             {
-                case 1:
-                    System.out.println("Opret medlem");
-                    container.newSwimmer();
-                    break;
-                case 2:
-                    System.out.println("Rediger medlem");
-                    break;
 
-                default:
-                    isRunning = false;
-                    break;
+                System.out.println("This is the Foreman menu");
+                System.out.println("Velkommen " + user.getName());
+                System.out.println("1. Opret medlem");
+                System.out.println("2. Rediger medlem");
 
+                selecter = scanner.nextInt();
+                switch (selecter)
+                {
+                    case 1:
+                        System.out.println("Opret medlem");
+                        container.newSwimmer();
+                        break;
+
+                    case 2:
+                        System.out.println("Rediger medlem");
+                        break;
+
+                    default:
+                        isRunning = false;
+                        break;
+
+                }
             }
         }
+
     }
+
+
 
     public void makeCashirMenu()
     {
