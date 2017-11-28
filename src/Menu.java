@@ -86,7 +86,9 @@ public class Menu
                         break;
 
                     case 3:
+                        ;
                         System.out.println("Se medlemmer");
+                        System.out.println(container.swimmers);
                         break;
 
                     case 4:
