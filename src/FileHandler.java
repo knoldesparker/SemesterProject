@@ -13,10 +13,10 @@ public class FileHandler {
             oos.close();
         }
         catch (FileNotFoundException eFNF) {
-
+            eFNF.printStackTrace();
         }
         catch (IOException eIO) {
-
+            eIO.printStackTrace();
         }
 
         // Stream write the text to the file

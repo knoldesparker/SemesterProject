@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Swimmer {
+public class Swimmer implements Serializable {
     private String name;
     private String address;
     private int age;

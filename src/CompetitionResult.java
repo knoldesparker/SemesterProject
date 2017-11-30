@@ -1,4 +1,6 @@
-public class CompetitionResult extends SwimResult{
+import java.io.Serializable;
+
+public class CompetitionResult extends SwimResult implements Serializable{
     private String competition;
     private int position;
     private SwimStyle style;

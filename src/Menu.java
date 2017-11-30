@@ -10,7 +10,7 @@ public class Menu {
     Container container = new Container();
 
     public void mainMenu() {
-//        container.swimmers = container.fh.readFromFile("swimmers.txt");
+        container.swimmers = container.fh.readFromFile("swimmers.txt");
         while (isRunning) {
 
             System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
