@@ -87,7 +87,8 @@ public class Container {
         System.out.println("Vælg hvilken ting De vil ændre på:\n" +
                 "[1]Navn\n" +
                 "[2]Adresse\n" +
-                "[3]Medlemskabstype\n");
+                "[3]Medlemskabstype\n" +
+                "[4]Slet medlem");
         intSelection = scanner.nextInt();
         scanner.nextLine();
         switch (intSelection) {
@@ -137,7 +138,20 @@ public class Container {
                         System.out.println("Medlemskab ændret til " + selectedSwimmer.getMembershipType());
                         break;
                 }
-                selectedSwimmer.setName(scanner.nextLine());
+
+                if (selectedSwimmer.getMembershipType() != MembershipType.PASSIVE) {
+                    if (selectedSwimmer.getAge() < 18) {
+                        selectedSwimmer.setPrice(1000);
+                    } else {
+                        selectedSwimmer.setPrice(1600);
+                    }
+                } else {
+                    selectedSwimmer.setPrice(500);
+                }
+                if (selectedSwimmer.getAge() >= 60) {
+                    selectedSwimmer.setPrice(selectedSwimmer.getPrice() * 0.75);
+                }
+                
                 System.out.println("Medlemskabstype skiftet fra " + oldMT + " til " +
                         selectedSwimmer.getMembershipType() + '.');
                 break;

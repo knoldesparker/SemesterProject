@@ -57,6 +57,10 @@ public class Swimmer implements Serializable {
         return membershipType;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -67,6 +71,10 @@ public class Swimmer implements Serializable {
 
     public void setMembershipType(MembershipType membershipType) {
         this.membershipType = membershipType;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
