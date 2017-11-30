@@ -3,9 +3,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Container {
-    ArrayList<Swimmer> swimmers = new ArrayList<>();
     FileHandler fh = new FileHandler();
+    ArrayList<Swimmer> swimmers = fh.readFromFile("swimmers.txt");
     Scanner scanner = new Scanner(System.in);
+    int intSelector;
+    String strSelector;
+    SwimStyle style;
+    Swimmer selectedSwimmer = null;
 
     public void newSwimmer() {
         int id = 0;
@@ -21,11 +25,11 @@ public class Container {
                 "[1] Konkurrencesvømmer\n" +
                 "[2] Motionssvømmer\n" +
                 "[3] Passivt medlemskab: ");
-        int answer = scanner.nextInt();
+        intSelector = scanner.nextInt();
         scanner.nextLine();
         MembershipType membershipType = null;
 
-        switch (answer) {
+        switch (intSelector) {
             case 1:
                 if (age < 18) {
                     membershipType = MembershipType.COMPETITION_JUNIOR;
@@ -41,7 +45,6 @@ public class Container {
                     membershipType = MembershipType.EXERCISE_SENIOR;
                 }
                 break;
-
 
             case 3:
                 membershipType = MembershipType.PASSIVE;
@@ -62,27 +65,18 @@ public class Container {
         }
 
         swimmers.add(new Swimmer(id, name, address, age, membershipType));
-        for (Swimmer swimmer:swimmers) {
-            System.out.println(swimmer);
-        }
-
-       fh.writeToFile(swimmers, "swimmers.txt");
+        printSwimmers();
+        fh.writeToFile(swimmers, "swimmers.txt");
     }
 
     public void editSwimmer() {
-        Swimmer selectedSwimmer = new Swimmer(0,"","",0,MembershipType.PASSIVE);
-        int intSelection;
-        String strSelection;
-
-        for (Swimmer swimmer:swimmers) {
-            System.out.println(swimmer);
-        }
+        printSwimmers();
         System.out.println("Indtast ID# på den svømmer, du ønsker at redigere:");
-        intSelection = scanner.nextInt();
+        intSelector = scanner.nextInt();
         scanner.nextLine();
 
         for (Swimmer swimmer:swimmers) {
-            if (intSelection == swimmer.getId()) {
+            if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
                 System.out.println(selectedSwimmer.getName() + " valgt.");
             }
@@ -93,9 +87,9 @@ public class Container {
                 "[2] Adresse\n" +
                 "[3] Medlemskabstype\n" +
                 "[4] Slet medlem");
-        intSelection = scanner.nextInt();
+        intSelector = scanner.nextInt();
         scanner.nextLine();
-        switch (intSelection) {
+        switch (intSelector) {
             case 1:
                 String oldName = selectedSwimmer.getName();
                 System.out.println("Indtast svømmerens nye navn:");
@@ -117,8 +111,8 @@ public class Container {
                         "[1] Konkurrencesvømmer\n" +
                         "[2] Motionssvømmer\n" +
                         "[3] Passivt medlem");
-                intSelection = scanner.nextInt();
-                switch (intSelection) {
+                intSelector = scanner.nextInt();
+                switch (intSelector) {
                     case 1:
                         if (selectedSwimmer.getAge() < 18) {
                             selectedSwimmer.setMembershipType(MembershipType.COMPETITION_JUNIOR);
@@ -163,8 +157,8 @@ public class Container {
             case 4:
                 System.out.println("Er du sikker på, at du vil fjerne " + selectedSwimmer.getName() +
                         " fra systemet? (y/N)");
-                strSelection = scanner.nextLine();
-                switch (strSelection) {
+                strSelector = scanner.nextLine();
+                switch (strSelector) {
                     case "y":
                         swimmers.remove(selectedSwimmer);
                         break;
@@ -174,6 +168,71 @@ public class Container {
                 }
         }
         fh.writeToFile(swimmers,"swimmers.txt");
+    }
+
+    public void addtrainingresults() {
+        printSwimmers();
+        System.out.println("Vælg en svømmer via ID#");
+        intSelector = scanner.nextInt();
+        scanner.nextLine();
+        for (Swimmer swimmer:swimmers) {
+            if (intSelector == swimmer.getId()) {
+                selectedSwimmer = swimmer;
+            }
+        }
+
+        System.out.println("Indtast dato for træning (DDMMYY)");
+        String dateStr = scanner.nextLine();
+        int dateD = Character.getNumericValue(dateStr.charAt(0)) * 10 +
+                Character.getNumericValue(dateStr.charAt(1));
+        int dateM = Character.getNumericValue(dateStr.charAt(2)) * 10 +
+                Character.getNumericValue(dateStr.charAt(3));
+        int dateY = Character.getNumericValue(dateStr.charAt(4)) * 10 +
+                Character.getNumericValue(dateStr.charAt(5));
+
+        System.out.println("Vælg en stilart\n" +
+                "[1] Butterfly\n" +
+                "[2] Crawl\n" +
+                "[3] Rygsvømning\n" +
+                "[4] Brystsvømning\n" +
+                "[5] Hundesvømning");
+        SwimStyle style = null;
+        intSelector = scanner.nextInt();
+        scanner.nextLine();
+        switch (intSelector) {
+            case 1:
+                style = SwimStyle.BUTTERFLY;
+                break;
+
+            case 2:
+                style = SwimStyle.CRAWL;
+                break;
+
+            case 3:
+                style = SwimStyle.BACKSTROKE;
+                break;
+
+            case 4:
+                style = SwimStyle.BREASTSTROKE;
+                break;
+
+            case 5:
+                style = SwimStyle.DOG_PADDLE;
+                break;
+        }
+
+        System.out.println("Indtast den svømmede tid i sekunder med decimaler");
+        double time = scanner.nextDouble();
+
+        selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dateD, dateM, dateY));
+        System.out.println(selectedSwimmer.getTrainingResults());
+        //fh.writeToFile(swimmers,"swimmers.txt");
+    }
+
+    public void printSwimmers() {
+        for (Swimmer swimmer:swimmers) {
+            System.out.println(swimmer);
+        }
     }
 
     public void updateSwimmerAge() {

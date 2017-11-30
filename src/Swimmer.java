@@ -68,6 +68,10 @@ public class Swimmer implements Serializable {
         return price;
     }
 
+    public ArrayList<TrainingResult> getTrainingResults() {
+        return trainingResults;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

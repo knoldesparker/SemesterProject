@@ -5,10 +5,10 @@ public class CompetitionResult extends SwimResult implements Serializable{
     private int position;
     private SwimStyle style;
 
-    public CompetitionResult(double time, String competition, int position, SwimStyle style) {
-        super(time);
+    public CompetitionResult(double time, SwimStyle style, String competition, int position, SwimStyle style1) {
+        super(time, style);
         this.competition = competition;
         this.position = position;
-        this.style = style;
+        this.style = style1;
     }
 }

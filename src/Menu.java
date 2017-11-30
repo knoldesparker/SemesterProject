@@ -10,7 +10,7 @@ public class Menu {
     Container container = new Container();
 
     public void mainMenu() {
-        container.swimmers = container.fh.readFromFile("swimmers.txt");
+        //container.swimmers = container.fh.readFromFile("swimmers.txt");
         container.updateSwimmerAge();
         System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
         while (isRunning) {
@@ -75,9 +75,7 @@ public class Menu {
 
                 case 3:
                     System.out.println("Se medlemmer");
-                    for (Swimmer swimmer:container.swimmers) {
-                        System.out.println(swimmer);
-                    }
+                    container.printSwimmers();
                     break;
 
                 case 4:
@@ -100,7 +98,7 @@ public class Menu {
 
     public void makeCashierMenu() {
         while (isRunning) {
-            System.out.println("This is the Cashir menu\n" +
+            System.out.println("This is the Cashier menu\n" +
                     "Velkommen " + user.getName() + "\n" +
                     "[1] Se Restance\n" +
                     "[2] Se medlemmer");
@@ -124,12 +122,17 @@ public class Menu {
     }
 
     public void makeTrainerMenu () {
-        System.out.println("This is the Trainer menu");
-        System.out.println();
-
-        selector = scanner.nextInt();
         while (isRunning) {
+            System.out.println("This is the Trainer menu\n" +
+                    "Velkommen " + user.getName() + "\n" +
+                    "[1] Tilføj nye træningsresultater");
 
+            selector = scanner.nextInt();
+            switch (selector) {
+                case 1:
+                    container.addtrainingresults();
+                    break;
+            }
         }
     }
 }
