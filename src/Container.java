@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,15 +10,19 @@ public class Container {
     public void newSwimmer() {
         int id = 0;
 
-        System.out.println("Skriv venligst dit navn: ");
+        System.out.println("Skriv venligst svømmerens navn: ");
         String name = scanner.nextLine();
-        System.out.println("Skriv venligst din adresse: ");
+        System.out.println("Skriv venligst svømmerens adresse: ");
         String address = scanner.nextLine();
-        System.out.println("Skriv venligst din alder: ");
+        System.out.println("Skriv venligst svømmerens fødselsår: ");
         int age = scanner.nextInt();
-        System.out.println("Vælg venligst hvorvidt du ønsker at være [1]konkurrencesvømmer, [2]motionssvømmer eller " +
-                "have et [3]passivt medlemskab: ");
+        scanner.nextLine();
+        System.out.println("Vælg venligst medlemskabstype:\n" +
+                "[1] Konkurrencesvømmer\n" +
+                "[2] Motionssvømmer\n" +
+                "[3] Passivt medlemskab: ");
         int answer = scanner.nextInt();
+        scanner.nextLine();
         MembershipType membershipType = null;
 
         switch (answer) {
@@ -60,7 +65,6 @@ public class Container {
         for (Swimmer swimmer:swimmers) {
             System.out.println(swimmer);
         }
-        System.out.println();
 
        fh.writeToFile(swimmers, "swimmers.txt");
     }
@@ -85,10 +89,10 @@ public class Container {
         }
 
         System.out.println("Vælg hvilken ting De vil ændre på:\n" +
-                "[1]Navn\n" +
-                "[2]Adresse\n" +
-                "[3]Medlemskabstype\n" +
-                "[4]Slet medlem");
+                "[1] Navn\n" +
+                "[2] Adresse\n" +
+                "[3] Medlemskabstype\n" +
+                "[4] Slet medlem");
         intSelection = scanner.nextInt();
         scanner.nextLine();
         switch (intSelection) {
@@ -110,9 +114,9 @@ public class Container {
                 MembershipType oldMT = selectedSwimmer.getMembershipType();
                 System.out.println("Den nuværende madlemskabstype er " + oldMT + ".\n" +
                         "Vælg ny medlemskabstype:\n" +
-                        "[1]Konkurrencesvømmer\n" +
-                        "[2]Motionssvømmer\n" +
-                        "[3]Passivt medlem");
+                        "[1] Konkurrencesvømmer\n" +
+                        "[2] Motionssvømmer\n" +
+                        "[3] Passivt medlem");
                 intSelection = scanner.nextInt();
                 switch (intSelection) {
                     case 1:
@@ -158,7 +162,7 @@ public class Container {
                 
             case 4:
                 System.out.println("Er du sikker på, at du vil fjerne " + selectedSwimmer.getName() +
-                        " fra systemet? (y/N");
+                        " fra systemet? (y/N)");
                 strSelection = scanner.nextLine();
                 switch (strSelection) {
                     case "y":
@@ -172,5 +176,10 @@ public class Container {
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    public void updateSwimmerAge() {
+        for (Swimmer swimmer:swimmers) {
+            swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTHYEAR());
+        }
+    }
 }
 

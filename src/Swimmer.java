@@ -1,10 +1,12 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Swimmer implements Serializable {
     private int id;
     private String name;
     private String address;
+    private final int BIRTHYEAR;
     private int age;
     private MembershipType membershipType;
     private double price;
@@ -15,11 +17,12 @@ public class Swimmer implements Serializable {
     private TrainingResult breaststrokePB;
     private TrainingResult dogPaddlePB;
 
-    public Swimmer(int id, String name, String address, int age, MembershipType membershipType) {
+    public Swimmer(int id, String name, String address, int birthYear, MembershipType membershipType) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.age = age;
+        this.BIRTHYEAR = birthYear;
+        this.age = LocalDate.now().getYear() - BIRTHYEAR;
         this.membershipType = membershipType;
 
         if (this.membershipType != MembershipType.PASSIVE) {
@@ -49,6 +52,10 @@ public class Swimmer implements Serializable {
         return address;
     }
 
+    public int getBIRTHYEAR() {
+        return BIRTHYEAR;
+    }
+
     public int getAge() {
         return age;
     }
@@ -67,6 +74,10 @@ public class Swimmer implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setMembershipType(MembershipType membershipType) {
@@ -92,6 +103,6 @@ public class Swimmer implements Serializable {
                 ", crawlPB=" + crawlPB +
                 ", backstrokePB=" + backstrokePB +
                 ", breaststrokePB=" + breaststrokePB +
-                ", dogPaddlePB=" + dogPaddlePB + "\n";
+                ", dogPaddlePB=" + dogPaddlePB;
     }
 }

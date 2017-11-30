@@ -11,9 +11,9 @@ public class Menu {
 
     public void mainMenu() {
         container.swimmers = container.fh.readFromFile("swimmers.txt");
+        container.updateSwimmerAge();
+        System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
         while (isRunning) {
-
-            System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
             System.out.println("Indtast Brugernavn:");
             String validUserName = scanner.nextLine();
             System.out.println("Indtast kodeord:");
@@ -26,8 +26,8 @@ public class Menu {
                     System.out.println("Forkert bruger eller pass");
                     continue;
                 }
-                    makeForemanMenu();
-                    makeCashirMenu();
+            makeForemanMenu();
+            makeCashierMenu();
 
 
 
@@ -54,13 +54,14 @@ public class Menu {
         if (user.getUserRole() == UserRole.FOREMAN) {
             while (isRunning) {
 
-                System.out.println("This is the Foreman menu");
-                System.out.println("Velkommen " + user.getName());
-                System.out.println("1. Opret medlem");
-                System.out.println("2. Rediger medlem");
-                System.out.println("3. Se medlemmer");
-                System.out.println("4. Tilføj Træningsresultat");
-                System.out.println("5. Tilføj Stævne");
+                System.out.println("This is the Foreman menu\n" +
+                        "Velkommen " + user.getName() + "\n" +
+                        "[1] Opret medlem\n" +
+                        "[2] Rediger medlem\n" +
+                        "[3] Se medlemmer\n" +
+                        "[4] Tilføj Træningsresultat\n" +
+                        "[5] Tilføj Stævne\n" +
+                        "[6] Log ud");
 
                 selector = scanner.nextInt();
                 switch (selector)
@@ -89,10 +90,13 @@ public class Menu {
                     case 5:
                         System.out.println("Tilføj Stævne");
 
-                    default:
+                    case 6:
                         isRunning = false;
                         break;
 
+                    default:
+                        System.out.println("Invalid input");
+                        break;
                 }
             }
         }
@@ -101,16 +105,16 @@ public class Menu {
 
 
 
-    public void makeCashirMenu()
+    public void makeCashierMenu()
     {
         if (user.getUserRole() == UserRole.CASSIR)
         {
             while (isRunning)
             {
-                System.out.println("This is the Cashir menu");
-                System.out.println("Velkommen " + user.getName());
-                System.out.println("1. Se Restance");
-                System.out.println("2. Se medlemmer");
+                System.out.println("This is the Cashir menu\n" +
+                        "Velkommen " + user.getName() + "\n" +
+                        "[1] Se Restance\n" +
+                        "[2] Se medlemmer");
 
                 selector = scanner.nextInt();
                 switch (selector)
