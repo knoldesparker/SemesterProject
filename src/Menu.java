@@ -18,20 +18,20 @@ public class Menu {
             String validUserName = scanner.nextLine();
             System.out.println("Indtast kodeord:");
             String validUserPass = scanner.nextLine();
-                try {
-                    user = userLogin(validUserName, validUserPass);
-                }
-                catch (IllegalArgumentException eIA)
-                {
-                    System.out.println("Forkert bruger eller pass");
-                    continue;
-                }
-            makeForemanMenu();
-            makeCashierMenu();
-
-
-
-
+            try {
+                user = userLogin(validUserName, validUserPass);
+            }
+            catch (IllegalArgumentException eIA) {
+                System.out.println("Forkert brugernavn eller password");
+                continue;
+            }
+            if (user.getUserRole() == UserRole.FOREMAN) {
+                makeForemanMenu();
+            } else if (user.getUserRole() == UserRole.CASHIER) {
+                makeCashierMenu();
+            } else if (user.getUserRole() == UserRole.TRAINER) {
+                makeTrainerMenu();
+            }
         }
     }
     //returnerer kunde hvis korrekt, returnerer null hvis forkert
@@ -51,106 +51,85 @@ public class Menu {
     }
 
     public void makeForemanMenu () {
-        if (user.getUserRole() == UserRole.FOREMAN) {
-            while (isRunning) {
+        while (isRunning) {
+            System.out.println("This is the Foreman menu\n" +
+                    "Velkommen " + user.getName() + "\n" +
+                    "[1] Opret medlem\n" +
+                    "[2] Rediger medlem\n" +
+                    "[3] Se medlemmer\n" +
+                    "[4] Tilføj Træningsresultat\n" +
+                    "[5] Tilføj Stævne\n" +
+                    "[6] Log ud");
 
-                System.out.println("This is the Foreman menu\n" +
-                        "Velkommen " + user.getName() + "\n" +
-                        "[1] Opret medlem\n" +
-                        "[2] Rediger medlem\n" +
-                        "[3] Se medlemmer\n" +
-                        "[4] Tilføj Træningsresultat\n" +
-                        "[5] Tilføj Stævne\n" +
-                        "[6] Log ud");
+            selector = scanner.nextInt();
+            switch (selector) {
+                case 1:
+                    System.out.println("Opret medlem");
+                    container.newSwimmer();
+                    break;
 
-                selector = scanner.nextInt();
-                switch (selector)
-                {
-                    case 1:
-                        System.out.println("Opret medlem");
-                        container.newSwimmer();
-                        break;
+                case 2:
+                    System.out.println("Rediger medlem");
+                    container.editSwimmer();
+                    break;
 
-                    case 2:
-                        System.out.println("Rediger medlem");
-                        container.editSwimmer();
-                        break;
+                case 3:
+                    System.out.println("Se medlemmer");
+                    for (Swimmer swimmer:container.swimmers) {
+                        System.out.println(swimmer);
+                    }
+                    break;
 
-                    case 3:
-                        System.out.println("Se medlemmer");
-                        for (Swimmer swimmer:container.swimmers) {
-                            System.out.println(swimmer);
-                        }
-                        break;
+                case 4:
+                    System.out.println("Tilføj Træning");
+                    break;
 
-                    case 4:
-                        System.out.println("Tilføj Træning");
-                        break;
+                case 5:
+                    System.out.println("Tilføj Stævne");
 
-                    case 5:
-                        System.out.println("Tilføj Stævne");
+                case 6:
+                    isRunning = false;
+                    break;
 
-                    case 6:
-                        isRunning = false;
-                        break;
+                default:
+                    System.out.println("Invalid input");
+                    break;
+            }
+        }
+    }
 
-                    default:
-                        System.out.println("Invalid input");
-                        break;
-                }
+    public void makeCashierMenu() {
+        while (isRunning) {
+            System.out.println("This is the Cashir menu\n" +
+                    "Velkommen " + user.getName() + "\n" +
+                    "[1] Se Restance\n" +
+                    "[2] Se medlemmer");
+
+            selector = scanner.nextInt();
+            switch (selector) {
+                case 1:
+                    System.out.println("Se Restance");
+                    break;
+
+                case 2:
+                    System.out.println("Se medlemmer");
+                    break;
+
+                default:
+                    isRunning = false;
+                    break;
             }
         }
 
     }
 
+    public void makeTrainerMenu () {
+        System.out.println("This is the Trainer menu");
+        System.out.println();
 
-
-    public void makeCashierMenu()
-    {
-        if (user.getUserRole() == UserRole.CASSIR)
-        {
-            while (isRunning)
-            {
-                System.out.println("This is the Cashir menu\n" +
-                        "Velkommen " + user.getName() + "\n" +
-                        "[1] Se Restance\n" +
-                        "[2] Se medlemmer");
-
-                selector = scanner.nextInt();
-                switch (selector)
-                {
-                    case 1:
-                        System.out.println("Se Restance");
-                        break;
-
-                    case 2:
-                        System.out.println("Se medlemmer");
-                        break;
-
-                        default:
-                            isRunning = false;
-                            break;
-                }
-            }
+        selector = scanner.nextInt();
+        while (isRunning) {
 
         }
     }
-
-    public void makeTrainerMenu ()
-    {
-        if (user.getUserRole() == UserRole.TRAINER)
-        {
-            System.out.println("This is the Trainer menu");
-            System.out.println();
-
-                selector = scanner.nextInt();
-                while (isRunning)
-                {
-
-                }
-        }
-
-    }
-
-
 }
