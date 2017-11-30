@@ -72,11 +72,14 @@ public class Menu {
 
                     case 2:
                         System.out.println("Rediger medlem");
+                        container.editSwimmer();
                         break;
 
                     case 3:
                         System.out.println("Se medlemmer");
-                        System.out.println(container.swimmers);
+                        for (Swimmer swimmer:container.swimmers) {
+                            System.out.println(swimmer);
+                        }
                         break;
 
                     case 4:

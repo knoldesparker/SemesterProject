@@ -2,6 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Swimmer implements Serializable {
+    private int id;
     private String name;
     private String address;
     private int age;
@@ -14,7 +15,8 @@ public class Swimmer implements Serializable {
     private TrainingResult breaststrokePB;
     private TrainingResult dogPaddlePB;
 
-    public Swimmer(String name, String address, int age, MembershipType membershipType) {
+    public Swimmer(int id, String name, String address, int age, MembershipType membershipType) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.age = age;
@@ -35,11 +37,44 @@ public class Swimmer implements Serializable {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
+
     @Override
     public String toString()
     {
         return "Swimmer{" +
-                "name='" + name + '\'' +
+                "ID#='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
                 ", membershipType=" + membershipType +
