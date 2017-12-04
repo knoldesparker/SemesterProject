@@ -1,21 +1,26 @@
 import java.io.Serializable;
 
 public class TrainingResult extends SwimResult implements Serializable{
-    private int day;
-    private int month;
+    private int dayOfYear;
     private int year;
 
-    public TrainingResult(double time, SwimStyle style, int day, int month, int year) {
+    public TrainingResult(double time, SwimStyle style, int dayOfYear, int year) {
         super(time, style);
-        this.day = day;
-        this.month = month;
+        this.dayOfYear = dayOfYear;
         this.year = year;
+    }
+
+    public int getDayOfYear() {
+        return dayOfYear;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     @Override
     public String toString() {
         return "TrainingResult{" +
-                "date=" + day + "/" + month + "-20" + year +
                 super.toString() +
                 '}';
     }

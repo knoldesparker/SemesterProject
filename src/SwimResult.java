@@ -10,6 +10,14 @@ public class SwimResult implements Serializable
         this.style = style;
     }
 
+    public double getTime() {
+        return time;
+    }
+
+    public SwimStyle getStyle() {
+        return style;
+    }
+
     @Override
     public String toString() {
         return "time=" + time +

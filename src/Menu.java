@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Menu {
     private int selector;
     private boolean isRunning = true;
+    boolean isLoggedIn = false;
     private Scanner scanner = new Scanner(System.in);
     private UserContainer userContainer = new UserContainer();
     private User user = null;
@@ -14,26 +15,42 @@ public class Menu {
         container.updateSwimmerAge();
         System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
         while (isRunning) {
-            System.out.println("Indtast Brugernavn:");
-            String validUserName = scanner.nextLine();
-            System.out.println("Indtast kodeord:");
-            String validUserPass = scanner.nextLine();
-            try {
-                user = userLogin(validUserName, validUserPass);
-            }
-            catch (IllegalArgumentException eIA) {
-                System.out.println("Forkert brugernavn eller password");
-                continue;
-            }
-            if (user.getUserRole() == UserRole.FOREMAN) {
-                makeForemanMenu();
-            } else if (user.getUserRole() == UserRole.CASHIER) {
-                makeCashierMenu();
-            } else if (user.getUserRole() == UserRole.TRAINER) {
-                makeTrainerMenu();
+            System.out.println("[1] Log ind\n" +
+                    "[2] Luk programmet");
+            selector = scanner.nextInt();
+            scanner.nextLine();
+            switch (selector) {
+                case 1:
+                    System.out.println("Indtast Brugernavn:");
+                    String validUserName = scanner.nextLine();
+                    System.out.println("Indtast kodeord:");
+                    String validUserPass = scanner.nextLine();
+                    try {
+                        user = userLogin(validUserName, validUserPass);
+                    } catch (IllegalArgumentException eIA) {
+                        System.out.println("Forkert brugernavn eller password");
+                        continue;
+                    }
+                    if (user.getUserRole() == UserRole.FOREMAN) {
+                        makeForemanMenu();
+                    } else if (user.getUserRole() == UserRole.CASHIER) {
+                        makeCashierMenu();
+                    } else if (user.getUserRole() == UserRole.TRAINER) {
+                        makeTrainerMenu();
+                    }
+                    break;
+
+                case 2:
+                    isRunning = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid input");
+                    break;
             }
         }
     }
+
     //returnerer kunde hvis korrekt, returnerer null hvis forkert
     public User userLogin (String username, String userpass) {
         ArrayList<User> users = userContainer.getUsers();
@@ -51,7 +68,8 @@ public class Menu {
     }
 
     public void makeForemanMenu () {
-        while (isRunning) {
+        isLoggedIn = true;
+        while (isLoggedIn) {
             System.out.println("This is the Foreman menu\n" +
                     "Velkommen " + user.getName() + "\n" +
                     "[1] Opret medlem\n" +
@@ -59,9 +77,11 @@ public class Menu {
                     "[3] Se medlemmer\n" +
                     "[4] Tilføj Træningsresultat\n" +
                     "[5] Tilføj Stævne\n" +
-                    "[6] Log ud");
+                    "[6] Log ud\n" +
+                    "[7] Log ud og luk programmet");
 
             selector = scanner.nextInt();
+            scanner.nextLine();
             switch (selector) {
                 case 1:
                     System.out.println("Opret medlem");
@@ -84,8 +104,14 @@ public class Menu {
 
                 case 5:
                     System.out.println("Tilføj Stævne");
+                    break;
 
                 case 6:
+                    isLoggedIn = false;
+                    break;
+
+                case 7:
+                    isLoggedIn = false;
                     isRunning = false;
                     break;
 
@@ -97,13 +123,17 @@ public class Menu {
     }
 
     public void makeCashierMenu() {
-        while (isRunning) {
+        isLoggedIn = true;
+        while (isLoggedIn) {
             System.out.println("This is the Cashier menu\n" +
                     "Velkommen " + user.getName() + "\n" +
                     "[1] Se Restance\n" +
-                    "[2] Se medlemmer");
+                    "[2] Se medlemmer\n" +
+                    "[3] Log ud\n" +
+                    "[4] Log ud og luk programmet");
 
             selector = scanner.nextInt();
+            scanner.nextLine();
             switch (selector) {
                 case 1:
                     System.out.println("Se Restance");
@@ -113,8 +143,17 @@ public class Menu {
                     System.out.println("Se medlemmer");
                     break;
 
-                default:
+                case 3:
+                    isLoggedIn = false;
+                    break;
+
+                case 4:
+                    isLoggedIn = false;
                     isRunning = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid input");
                     break;
             }
         }
@@ -122,15 +161,32 @@ public class Menu {
     }
 
     public void makeTrainerMenu () {
-        while (isRunning) {
+        isLoggedIn = true;
+        while (isLoggedIn) {
             System.out.println("This is the Trainer menu\n" +
                     "Velkommen " + user.getName() + "\n" +
-                    "[1] Tilføj nye træningsresultater");
+                    "[1] Tilføj nye træningsresultater\n" +
+                    "[2] Log ud\n" +
+                    "[3] Log ud og luk programmet");
 
             selector = scanner.nextInt();
+            scanner.nextLine();
             switch (selector) {
                 case 1:
                     container.addtrainingresults();
+                    break;
+
+                case 2:
+                    isLoggedIn = false;
+                    break;
+
+                case 3:
+                    isLoggedIn = false;
+                    isRunning = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid input");
                     break;
             }
         }

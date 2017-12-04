@@ -19,7 +19,7 @@ public class Container {
         System.out.println("Skriv venligst svømmerens adresse: ");
         String address = scanner.nextLine();
         System.out.println("Skriv venligst svømmerens fødselsår: ");
-        int age = scanner.nextInt();
+        int birthYear = scanner.nextInt();
         scanner.nextLine();
         System.out.println("Vælg venligst medlemskabstype:\n" +
                 "[1] Konkurrencesvømmer\n" +
@@ -31,19 +31,11 @@ public class Container {
 
         switch (intSelector) {
             case 1:
-                if (age < 18) {
-                    membershipType = MembershipType.COMPETITION_JUNIOR;
-                } else {
-                    membershipType = MembershipType.COMPETITION_SENIOR;
-                }
+                membershipType = MembershipType.COMPETITION_SENIOR;
                 break;
 
             case 2:
-                if (age < 18) {
-                    membershipType = MembershipType.EXERCISE_JUNIOR;
-                } else {
-                    membershipType = MembershipType.EXERCISE_SENIOR;
-                }
+                membershipType = MembershipType.EXERCISE_SENIOR;
                 break;
 
             case 3:
@@ -64,7 +56,7 @@ public class Container {
             }
         }
 
-        swimmers.add(new Swimmer(id, name, address, age, membershipType));
+        swimmers.add(new Swimmer(id, name, address, birthYear, membershipType));
         printSwimmers();
         fh.writeToFile(swimmers, "swimmers.txt");
     }
@@ -171,6 +163,9 @@ public class Container {
     }
 
     public void addtrainingresults() {
+        int dayOfYear;
+        int year;
+
         printSwimmers();
         System.out.println("Vælg en svømmer via ID#");
         intSelector = scanner.nextInt();
@@ -181,14 +176,15 @@ public class Container {
             }
         }
 
-        System.out.println("Indtast dato for træning (DDMMYY)");
-        String dateStr = scanner.nextLine();
-        int dateD = Character.getNumericValue(dateStr.charAt(0)) * 10 +
-                Character.getNumericValue(dateStr.charAt(1));
-        int dateM = Character.getNumericValue(dateStr.charAt(2)) * 10 +
-                Character.getNumericValue(dateStr.charAt(3));
-        int dateY = Character.getNumericValue(dateStr.charAt(4)) * 10 +
-                Character.getNumericValue(dateStr.charAt(5));
+        System.out.println("Hvor mange dage siden blev tiden sat?");
+        int daysSinceTraining = scanner.nextInt();
+        if (daysSinceTraining > LocalDate.now().getDayOfYear()) {
+            year = LocalDate.now().getYear() - 1;
+            dayOfYear = 365 + LocalDate.now().getDayOfYear() - daysSinceTraining;
+        } else {
+            year = LocalDate.now().getYear();
+            dayOfYear = LocalDate.now().getDayOfYear() - daysSinceTraining;
+        }
 
         System.out.println("Vælg en stilart\n" +
                 "[1] Butterfly\n" +
@@ -224,8 +220,9 @@ public class Container {
         System.out.println("Indtast den svømmede tid i sekunder med decimaler");
         double time = scanner.nextDouble();
 
-        selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dateD, dateM, dateY));
+        selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dayOfYear, year));
         System.out.println(selectedSwimmer.getTrainingResults());
+        selectedSwimmer.updatePB();
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
@@ -237,7 +234,7 @@ public class Container {
 
     public void updateSwimmerAge() {
         for (Swimmer swimmer:swimmers) {
-            swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTHYEAR());
+            swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTH_YEAR());
         }
     }
 }

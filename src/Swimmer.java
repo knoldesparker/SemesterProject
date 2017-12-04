@@ -6,7 +6,7 @@ public class Swimmer implements Serializable {
     private int id;
     private String name;
     private String address;
-    private final int BIRTHYEAR;
+    private final int BIRTH_YEAR;
     private int age;
     private MembershipType membershipType;
     private double price;
@@ -21,9 +21,15 @@ public class Swimmer implements Serializable {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.BIRTHYEAR = birthYear;
-        this.age = LocalDate.now().getYear() - BIRTHYEAR;
+        this.BIRTH_YEAR = birthYear;
+        this.age = LocalDate.now().getYear() - BIRTH_YEAR;
         this.membershipType = membershipType;
+
+        if (age < 18 && this.membershipType == MembershipType.COMPETITION_SENIOR) {
+            this.membershipType = MembershipType.COMPETITION_JUNIOR;
+        } else if (age < 18 && this.membershipType == MembershipType.EXERCISE_SENIOR) {
+            this.membershipType = MembershipType.EXERCISE_JUNIOR;
+        }
 
         if (this.membershipType != MembershipType.PASSIVE) {
             if (age < 18) {
@@ -40,6 +46,76 @@ public class Swimmer implements Serializable {
         }
     }
 
+    public void updatePB() {
+        for (TrainingResult tr:trainingResults) {
+            if ((tr.getYear() == LocalDate.now().getYear() &&
+                    tr.getDayOfYear() + 30 >= LocalDate.now().getDayOfYear()) ||
+                    (LocalDate.now().getDayOfYear() < 30 &&
+                            tr.getYear() + 1 == LocalDate.now().getYear() &&
+                            tr.getDayOfYear() + 30 >= LocalDate.now().getDayOfYear() + 365)) {
+                if (tr.getStyle() == SwimStyle.BUTTERFLY) {
+                    if (butterflyPB == null || tr.getTime() < butterflyPB.getTime()) {
+                        butterflyPB = tr;
+                    } else if ((butterflyPB.getYear() == LocalDate.now().getYear() &&
+                            butterflyPB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
+                            (LocalDate.now().getDayOfYear() < 30 &&
+                                    butterflyPB.getYear() + 1 == LocalDate.now().getYear() &&
+                                    butterflyPB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear() + 365)) {
+                        butterflyPB = tr;
+                    }
+                }
+
+                if (tr.getStyle() == SwimStyle.CRAWL) {
+                    if (crawlPB == null || tr.getTime() < crawlPB.getTime()) {
+                        crawlPB = tr;
+                    } else if ((crawlPB.getYear() == LocalDate.now().getYear() &&
+                            crawlPB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
+                            (LocalDate.now().getDayOfYear() < 30 &&
+                                    crawlPB.getYear() + 1 == LocalDate.now().getYear() &&
+                                    crawlPB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear() + 365)) {
+                        crawlPB = tr;
+                    }
+                }
+
+                if (tr.getStyle() == SwimStyle.BACKSTROKE) {
+                    if (backstrokePB == null || tr.getTime() < backstrokePB.getTime()) {
+                        backstrokePB = tr;
+                    } else if ((backstrokePB.getYear() == LocalDate.now().getYear() &&
+                            backstrokePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
+                            (LocalDate.now().getDayOfYear() < 30 &&
+                                    backstrokePB.getYear() + 1 == LocalDate.now().getYear() &&
+                                    backstrokePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear() + 365)) {
+                        backstrokePB = tr;
+                    }
+                }
+
+                if (tr.getStyle() == SwimStyle.BREASTSTROKE) {
+                    if (breaststrokePB == null || tr.getTime() < breaststrokePB.getTime()) {
+                        breaststrokePB = tr;
+                    } else if ((breaststrokePB.getYear() == LocalDate.now().getYear() &&
+                            breaststrokePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
+                            (LocalDate.now().getDayOfYear() < 30 &&
+                                    breaststrokePB.getYear() + 1 == LocalDate.now().getYear() &&
+                                    breaststrokePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear() + 365)) {
+                        breaststrokePB = tr;
+                    }
+                }
+
+                if (tr.getStyle() == SwimStyle.DOG_PADDLE) {
+                    if (dogPaddlePB == null || tr.getTime() < dogPaddlePB.getTime()) {
+                        dogPaddlePB = tr;
+                    } else if ((dogPaddlePB.getYear() == LocalDate.now().getYear() &&
+                            dogPaddlePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
+                            (LocalDate.now().getDayOfYear() < 30 &&
+                                    dogPaddlePB.getYear() + 1 == LocalDate.now().getYear() &&
+                                    dogPaddlePB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear() + 365)) {
+                        dogPaddlePB = tr;
+                    }
+                }
+            }
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -52,8 +128,8 @@ public class Swimmer implements Serializable {
         return address;
     }
 
-    public int getBIRTHYEAR() {
-        return BIRTHYEAR;
+    public int getBIRTH_YEAR() {
+        return BIRTH_YEAR;
     }
 
     public int getAge() {
