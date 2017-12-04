@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class UserContainer
-{
+public class UserContainer {
     private ArrayList<User> users = new ArrayList<>();
 
+    //AUTHOR(S): CPS
     public UserContainer()
     {
         initializeUsers();
@@ -14,7 +14,8 @@ public class UserContainer
         return users;
     }
 
-    private void initializeUsers(){
+    //AUTHOR(S): CPS
+    private void initializeUsers() {
         users.add(new User("forman","1234", "Freja", UserRole.FOREMAN));
         users.add(new User("brit","1234", "Brit", UserRole.CASHIER));
         users.add(new User("else","1234", "Else", UserRole.CASHIER));

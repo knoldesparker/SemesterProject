@@ -2,8 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class FileHandler {
+    //AUTHOR(S): ECS, CPS; (THJ)
+    //We copied the main structure from a code example on Fronter, but edited it to fit our program
     public void writeToFile(ArrayList<Swimmer> swimmers, String path) {
-        // Create it by creating a File file to a FileOutputStream then to a OutputStreamWriter
         try {
             File file = new File(path);
             FileOutputStream fos = new FileOutputStream(file);
@@ -18,15 +19,12 @@ public class FileHandler {
         catch (IOException eIO) {
             eIO.printStackTrace();
         }
-
-        // Stream write the text to the file
-
-        // Remember to close the Stream
     }
 
+    //AUTHOR(S): ECS, CPS; (THJ)
+    //We copied the main structure from a code example on Fronter, but edited it to fit our program
     public ArrayList<Swimmer> readFromFile(String path) {
         ArrayList<Swimmer> tempSwimmers = new ArrayList<>();
-        // Create a read stream from a file by a File and FileInputStream
         try {
             FileInputStream fis = new FileInputStream(new File(path));
             BufferedInputStream bis = new BufferedInputStream(fis);

@@ -10,8 +10,8 @@ public class Menu {
     private User user = null;
     Container container = new Container();
 
+    //AUTHOR(S): CPS, ECS
     public void mainMenu() {
-        //container.swimmers = container.fh.readFromFile("swimmers.txt");
         container.updateSwimmerAge();
         System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
         while (isRunning) {
@@ -51,6 +51,7 @@ public class Menu {
         }
     }
 
+    //AUTHOR(S): CPS
     //returnerer kunde hvis korrekt, returnerer null hvis forkert
     public User userLogin (String username, String userpass) {
         ArrayList<User> users = userContainer.getUsers();
@@ -67,6 +68,7 @@ public class Menu {
         throw new IllegalArgumentException();
     }
 
+    //AUTHOR(S): CPS, ECS
     public void makeForemanMenu () {
         isLoggedIn = true;
         while (isLoggedIn) {
@@ -122,6 +124,7 @@ public class Menu {
         }
     }
 
+    //AUTHOR(S): CPS, ECS
     public void makeCashierMenu() {
         isLoggedIn = true;
         while (isLoggedIn) {
@@ -160,6 +163,7 @@ public class Menu {
 
     }
 
+    //AUTHOR(S): CPS, ECS
     public void makeTrainerMenu () {
         isLoggedIn = true;
         while (isLoggedIn) {

@@ -11,6 +11,7 @@ public class Container {
     SwimStyle style;
     Swimmer selectedSwimmer = null;
 
+    //AUTHOR(S): MHP, ECS, CPS
     public void newSwimmer() {
         int id = 0;
 
@@ -61,6 +62,7 @@ public class Container {
         fh.writeToFile(swimmers, "swimmers.txt");
     }
 
+    //AUTHOR(S): ECS
     public void editSwimmer() {
         printSwimmers();
         System.out.println("Indtast ID# på den svømmer, du ønsker at redigere:");
@@ -162,6 +164,7 @@ public class Container {
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    //AUTHOR(S): ECS, CPS
     public void addtrainingresults() {
         int dayOfYear;
         int year;
@@ -226,12 +229,15 @@ public class Container {
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    //AUTHOR(S): ECS
     public void printSwimmers() {
         for (Swimmer swimmer:swimmers) {
             System.out.println(swimmer);
         }
     }
 
+    //AUTHOR(S): ECS
+    //TODO Expand to include membershiptype and pricing
     public void updateSwimmerAge() {
         for (Swimmer swimmer:swimmers) {
             swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTH_YEAR());

@@ -17,6 +17,7 @@ public class Swimmer implements Serializable {
     private TrainingResult breaststrokePB;
     private TrainingResult dogPaddlePB;
 
+    //AUTHOR(S): ECS, CPS, MHP, JHH
     public Swimmer(int id, String name, String address, int birthYear, MembershipType membershipType) {
         this.id = id;
         this.name = name;
@@ -46,6 +47,7 @@ public class Swimmer implements Serializable {
         }
     }
 
+    //AUTHOR(S): ECS, CPS, MHP, JHH
     public void updatePB() {
         for (TrainingResult tr:trainingResults) {
             if ((tr.getYear() == LocalDate.now().getYear() &&
