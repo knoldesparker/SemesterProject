@@ -29,13 +29,21 @@ public class FileHandler {
         // Create a read stream from a file by a File and FileInputStream
         try {
             FileInputStream fis = new FileInputStream(new File(path));
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            ObjectInputStream ois = new ObjectInputStream(bis);
+
 
             tempSwimmers = (ArrayList<Swimmer>) ois.readObject();
             ois.close();
         }
-        catch (Exception eFNF) {
-
+        catch (FileNotFoundException eFNF) {
+            System.out.println("Idiot");
+        }
+        catch (IOException eIO) {
+            System.out.println("idiot 2");
+            eIO.printStackTrace();
+        }catch (ClassNotFoundException eCNF){
+            System.out.println("3");
         }
 
         return tempSwimmers;

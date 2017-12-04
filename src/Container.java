@@ -226,7 +226,7 @@ public class Container {
 
         selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dateD, dateM, dateY));
         System.out.println(selectedSwimmer.getTrainingResults());
-        //fh.writeToFile(swimmers,"swimmers.txt");
+        fh.writeToFile(swimmers,"swimmers.txt");
     }
 
     public void printSwimmers() {

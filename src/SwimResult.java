@@ -1,4 +1,7 @@
-public class SwimResult {
+import java.io.Serializable;
+
+public class SwimResult implements Serializable
+{
     private double time;
     private SwimStyle style;
 
