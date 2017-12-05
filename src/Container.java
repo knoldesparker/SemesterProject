@@ -165,7 +165,7 @@ public class Container {
     }
 
     //AUTHOR(S): ECS, CPS
-    public void addtrainingresults() {
+    public void addTrainingResults() {
         int dayOfYear;
         int year;
 
@@ -233,6 +233,111 @@ public class Container {
     //TODO Finish this method, so that it actually does something
     public void listBestSwimmers(MembershipType ageGroup, SwimStyle style) {
         Swimmer[] bestInClass = new Swimmer[5];
+        Swimmer[] bestInClassHelper;
+
+        for (Swimmer swimmer:swimmers) {
+            if (swimmer.getMembershipType() == ageGroup) {
+                switch (style) {
+                    case BUTTERFLY:
+                        if (swimmer.getButterflyPB() != null) {
+                            for (int i = 0; i < 5; i++) {
+                                if (bestInClass[i] == null) {
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                } else if (swimmer.getButterflyPB().getTime() <
+                                        bestInClass[i].getButterflyPB().getTime()) {
+                                    bestInClassHelper = bestInClass;
+                                    for (int j = 3; j >= i; j--) {
+                                        bestInClass[j+1] = bestInClassHelper[j];
+                                    }
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case CRAWL:
+                        if (swimmer.getCrawlPB() != null) {
+                            for (int i = 0; i < 5; i++) {
+                                if (bestInClass[i] == null) {
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                } else if (swimmer.getCrawlPB().getTime() <
+                                        bestInClass[i].getCrawlPB().getTime()) {
+                                    bestInClassHelper = bestInClass;
+                                    for (int j = 3; j >= i; j--) {
+                                        bestInClass[j+1] = bestInClassHelper[j];
+                                    }
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case BACKSTROKE:
+                        if (swimmer.getBackstrokePB() != null) {
+                            for (int i = 0; i < 5; i++) {
+                                if (bestInClass[i] == null) {
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                } else if (swimmer.getBackstrokePB().getTime() <
+                                        bestInClass[i].getBackstrokePB().getTime()) {
+                                    bestInClassHelper = bestInClass;
+                                    for (int j = 3; j >= i; j--) {
+                                        bestInClass[j+1] = bestInClassHelper[j];
+                                    }
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case BREASTSTROKE:
+                        if (swimmer.getBreaststrokePB() != null) {
+                            for (int i = 0; i < 5; i++) {
+                                if (bestInClass[i] == null) {
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                } else if (swimmer.getBreaststrokePB().getTime() <
+                                        bestInClass[i].getBreaststrokePB().getTime()) {
+                                    bestInClassHelper = bestInClass;
+                                    for (int j = 3; j >= i; j--) {
+                                        bestInClass[j+1] = bestInClassHelper[j];
+                                    }
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case DOG_PADDLE:
+                        if (swimmer.getDogPaddlePB() != null) {
+                            for (int i = 0; i < 5; i++) {
+                                if (bestInClass[i] == null) {
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                } else if (swimmer.getDogPaddlePB().getTime() <
+                                        bestInClass[i].getDogPaddlePB().getTime()) {
+                                    bestInClassHelper = bestInClass;
+                                    for (int j = 3; j >= i; j--) {
+                                        bestInClass[j+1] = bestInClassHelper[j];
+                                    }
+                                    bestInClass[i] = swimmer;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        for (Swimmer competitor:bestInClass) {
+            System.out.println(competitor);
+        }
     }
 
     //AUTHOR(S): ECS

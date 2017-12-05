@@ -150,6 +150,26 @@ public class Swimmer implements Serializable {
         return trainingResults;
     }
 
+    public TrainingResult getButterflyPB() {
+        return butterflyPB;
+    }
+
+    public TrainingResult getCrawlPB() {
+        return crawlPB;
+    }
+
+    public TrainingResult getBackstrokePB() {
+        return backstrokePB;
+    }
+
+    public TrainingResult getBreaststrokePB() {
+        return breaststrokePB;
+    }
+
+    public TrainingResult getDogPaddlePB() {
+        return dogPaddlePB;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

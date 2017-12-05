@@ -178,7 +178,7 @@ public class Menu {
             scanner.nextLine();
             switch (selector) {
                 case 1:
-                    container.addtrainingresults();
+                    container.addTrainingResults();
                     break;
 
                 case 2:
