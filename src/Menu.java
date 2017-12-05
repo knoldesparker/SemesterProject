@@ -170,8 +170,9 @@ public class Menu {
             System.out.println("This is the Trainer menu\n" +
                     "Velkommen " + user.getName() + "\n" +
                     "[1] Tilføj nye træningsresultater\n" +
-                    "[2] Log ud\n" +
-                    "[3] Log ud og luk programmet");
+                    "[2] Se liste over bedste svømmere\n" +
+                    "[3] Log ud\n" +
+                    "[4] Log ud og luk programmet");
 
             selector = scanner.nextInt();
             scanner.nextLine();
@@ -181,10 +182,57 @@ public class Menu {
                     break;
 
                 case 2:
-                    isLoggedIn = false;
+                    System.out.println("Vælg en aldersgruppe:\n" +
+                            "[1] Junior\n" +
+                            "[2] senior");
+                    selector = scanner.nextInt();
+                    MembershipType ageGroupSelector;
+                    switch (selector) {
+                        case 1:
+                            ageGroupSelector = MembershipType.COMPETITION_JUNIOR;
+                            break;
+
+                        default:
+                            ageGroupSelector = MembershipType.COMPETITION_SENIOR;
+                            break;
+                    }
+
+                    System.out.println("Vælg en svømmestil:\n" +
+                            "[1] Butterfly\n" +
+                            "[2] Crawl\n" +
+                            "[3] Rygsvømning\n" +
+                            "[4] Brystsvømning\n" +
+                            "[5] Hundesvømning");
+                    selector = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (selector) {
+                        case 1:
+                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BUTTERFLY);
+                            break;
+
+                        case 2:
+                            container.listBestSwimmers(ageGroupSelector,SwimStyle.CRAWL);
+                            break;
+
+                        case 3:
+                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BACKSTROKE);
+                            break;
+
+                        case 4:
+                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BREASTSTROKE);
+                            break;
+
+                        case 5:
+                            container.listBestSwimmers(ageGroupSelector,SwimStyle.DOG_PADDLE);
+                            break;
+                    }
                     break;
 
                 case 3:
+                    isLoggedIn = false;
+                    break;
+
+                case 4:
                     isLoggedIn = false;
                     isRunning = false;
                     break;

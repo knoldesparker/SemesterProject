@@ -230,6 +230,12 @@ public class Container {
     }
 
     //AUTHOR(S): ECS
+    //TODO Finish this method, so that it actually does something
+    public void listBestSwimmers(MembershipType ageGroup, SwimStyle style) {
+        Swimmer[] bestInClass = new Swimmer[5];
+    }
+
+    //AUTHOR(S): ECS
     public void printSwimmers() {
         for (Swimmer swimmer:swimmers) {
             System.out.println(swimmer);
