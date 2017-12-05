@@ -200,7 +200,6 @@ public class Swimmer implements Serializable {
                 ", age=" + age +
                 ", membershipType=" + membershipType +
                 ", price=" + price +
-                ", trainingResults=" + trainingResults +
                 ", butterflyPB=" + butterflyPB +
                 ", crawlPB=" + crawlPB +
                 ", backstrokePB=" + backstrokePB +

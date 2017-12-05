@@ -20,7 +20,7 @@ public class TrainingResult extends SwimResult implements Serializable{
 
     @Override
     public String toString() {
-        return "TrainingResult{" +
+        return '{' +
                 super.toString() +
                 '}';
     }
