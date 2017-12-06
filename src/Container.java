@@ -160,6 +160,8 @@ public class Container {
                     default:
                         break;
                 }
+            default:
+                break;
         }
         fh.writeToFile(swimmers,"swimmers.txt");
     }
@@ -230,7 +232,6 @@ public class Container {
     }
 
     //AUTHOR(S): ECS
-    //TODO Finish this method, so that it actually does something
     public void listBestSwimmers(MembershipType ageGroup, SwimStyle style) {
         Swimmer[] bestInClass = new Swimmer[5];
         Swimmer[] bestInClassHelper;
@@ -349,10 +350,29 @@ public class Container {
 
     //AUTHOR(S): ECS
     //TODO Expand to include membershiptype and pricing
-    public void updateSwimmerAge() {
+    public void updateSwimmer() {
         for (Swimmer swimmer:swimmers) {
+            int oldAge = swimmer.getAge();
             swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTH_YEAR());
+            if (oldAge < 18 && swimmer.getAge() >= 18) {
+                if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR) {
+                    swimmer.setMembershipType(MembershipType.COMPETITION_SENIOR);
+                    swimmer.setPrice(1600);
+                    System.out.println("OBS!\n" +
+                            swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
+                } else if (swimmer.getMembershipType() == MembershipType.EXERCISE_JUNIOR) {
+                    swimmer.setMembershipType(MembershipType.EXERCISE_SENIOR);
+                    swimmer.setPrice(1600);
+                    System.out.println("OBS!\n" +
+                            swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
+                }
+            } else if (oldAge < 60 && swimmer.getAge() >= 60) {
+                swimmer.setPrice(swimmer.getPrice() * 0.75);
+                System.out.println("OBS!\n" +
+                        swimmer.getName() + "har fået tildelt aldersrabat\n");
+            }
         }
+        fh.writeToFile(swimmers,"swimmers.txt");
     }
 }
 

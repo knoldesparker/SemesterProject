@@ -191,8 +191,7 @@ public class Swimmer implements Serializable {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Swimmer{" +
                 "ID#='" + id + '\'' +
                 ", name='" + name + '\'' +

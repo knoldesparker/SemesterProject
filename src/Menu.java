@@ -12,7 +12,7 @@ public class Menu {
 
     //AUTHOR(S): CPS, ECS
     public void mainMenu() {
-        container.updateSwimmerAge();
+        container.updateSwimmer();
         System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
         while (isRunning) {
             System.out.println("[1] Log ind\n" +
@@ -77,10 +77,8 @@ public class Menu {
                     "[1] Opret medlem\n" +
                     "[2] Rediger medlem\n" +
                     "[3] Se medlemmer\n" +
-                    "[4] Tilføj Træningsresultat\n" +
-                    "[5] Tilføj Stævne\n" +
-                    "[6] Log ud\n" +
-                    "[7] Log ud og luk programmet");
+                    "[4] Log ud\n" +
+                    "[5] Log ud og luk programmet");
 
             selector = scanner.nextInt();
             scanner.nextLine();
@@ -101,18 +99,10 @@ public class Menu {
                     break;
 
                 case 4:
-                    System.out.println("Tilføj Træning");
-                    break;
-
-                case 5:
-                    System.out.println("Tilføj Stævne");
-                    break;
-
-                case 6:
                     isLoggedIn = false;
                     break;
 
-                case 7:
+                case 5:
                     isLoggedIn = false;
                     isRunning = false;
                     break;
