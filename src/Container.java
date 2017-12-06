@@ -65,7 +65,7 @@ public class Container {
     //AUTHOR(S): ECS
     public void editSwimmer() {
         printSwimmers();
-        System.out.println("Indtast ID# på den svømmer, du ønsker at redigere:");
+        System.out.println("Vælg en svømmer via ID#");
         intSelector = scanner.nextInt();
         scanner.nextLine();
 
@@ -342,6 +342,42 @@ public class Container {
     }
 
     //AUTHOR(S): ECS
+    public void listArrears() {
+        System.out.println("Disse svømmere er i restance:");
+        for (Swimmer swimmer:swimmers) {
+            if (!swimmer.isHasPaid()) {
+                System.out.println(" - ID#" + swimmer.getId() + " " + swimmer.getName() + ", " + swimmer.getAddress() +
+                        ", " + swimmer.getAge() + " år");
+            }
+        }
+        System.out.println();
+    }
+
+    //AUTHOR(S): ECS, CPS
+    public void editArrears() {
+        System.out.println("Vælg en svømmer via ID#");
+        intSelector = scanner.nextInt();
+        scanner.nextLine();
+        for (Swimmer swimmer:swimmers) {
+            if (intSelector == swimmer.getId() && !swimmer.isHasPaid()) {
+                selectedSwimmer = swimmer;
+                System.out.println("Har " + selectedSwimmer.getName() + " betalt sit kontingent? (y/N)");
+                strSelector = scanner.nextLine();
+                switch (strSelector) {
+                    case "y":
+                        swimmer.setHasPaid(true);
+                        System.out.println(swimmer.getName() + " er ikke længere i restance");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        fh.writeToFile(swimmers,"swimmers.txt");
+    }
+
+    //AUTHOR(S): ECS
     public void printSwimmers() {
         for (Swimmer swimmer:swimmers) {
             System.out.println(swimmer);
@@ -349,7 +385,6 @@ public class Container {
     }
 
     //AUTHOR(S): ECS
-    //TODO Expand to include membershiptype and pricing
     public void updateSwimmer() {
         for (Swimmer swimmer:swimmers) {
             int oldAge = swimmer.getAge();

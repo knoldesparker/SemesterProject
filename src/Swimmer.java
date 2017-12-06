@@ -16,6 +16,7 @@ public class Swimmer implements Serializable {
     private TrainingResult backstrokePB;
     private TrainingResult breaststrokePB;
     private TrainingResult dogPaddlePB;
+    private boolean hasPaid = false;
 
     //AUTHOR(S): ECS, CPS, MHP, JHH
     public Swimmer(int id, String name, String address, int birthYear, MembershipType membershipType) {
@@ -170,6 +171,10 @@ public class Swimmer implements Serializable {
         return dogPaddlePB;
     }
 
+    public boolean isHasPaid() {
+        return hasPaid;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -188,6 +193,10 @@ public class Swimmer implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
     }
 
     @Override

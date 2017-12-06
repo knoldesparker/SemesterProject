@@ -118,10 +118,10 @@ public class Menu {
     public void makeCashierMenu() {
         isLoggedIn = true;
         while (isLoggedIn) {
-            System.out.println("This is the Cashier menu\n" +
+            System.out.println("This is the cashier menu\n" +
                     "Velkommen " + user.getName() + "\n" +
-                    "[1] Se Restance\n" +
-                    "[2] Se medlemmer\n" +
+                    "[1] Ret restance\n" +
+                    "[2] Se restance\n" +
                     "[3] Log ud\n" +
                     "[4] Log ud og luk programmet");
 
@@ -129,11 +129,14 @@ public class Menu {
             scanner.nextLine();
             switch (selector) {
                 case 1:
-                    System.out.println("Se Restance");
+                    System.out.println("Ret restance");
+                    container.listArrears();
+                    container.editArrears();
                     break;
 
                 case 2:
-                    System.out.println("Se medlemmer");
+                    System.out.println("Se restance");
+                    container.listArrears();
                     break;
 
                 case 3:
