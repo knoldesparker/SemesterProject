@@ -16,6 +16,7 @@ public class Swimmer implements Serializable {
     private TrainingResult backstrokePB;
     private TrainingResult breaststrokePB;
     private TrainingResult dogPaddlePB;
+    private ArrayList<CompetitionResult> competitionResults = new ArrayList<>();
     private boolean hasPaid = false;
 
     //AUTHOR(S): ECS, CPS, MHP, JHH
@@ -169,6 +170,10 @@ public class Swimmer implements Serializable {
 
     public TrainingResult getDogPaddlePB() {
         return dogPaddlePB;
+    }
+
+    public ArrayList<CompetitionResult> getCompetitionResults() {
+        return competitionResults;
     }
 
     public boolean isHasPaid() {

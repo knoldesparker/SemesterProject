@@ -10,6 +10,8 @@ public class Container {
     String strSelector;
     SwimStyle style;
     Swimmer selectedSwimmer = null;
+    int dayOfYear;
+    int year;
 
     //AUTHOR(S): MHP, ECS, CPS
     public void newSwimmer() {
@@ -168,9 +170,6 @@ public class Container {
 
     //AUTHOR(S): ECS, CPS
     public void addTrainingResults() {
-        int dayOfYear;
-        int year;
-
         printSwimmers();
         System.out.println("Vælg en svømmer via ID#");
         intSelector = scanner.nextInt();
@@ -342,6 +341,69 @@ public class Container {
     }
 
     //AUTHOR(S): ECS
+    public void addCompetitionResult() {
+        for (Swimmer swimmer:swimmers) {
+            if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR ||
+                    swimmer.getMembershipType() == MembershipType.COMPETITION_SENIOR) {
+                System.out.println(swimmer);
+            }
+        }
+        System.out.println("Vælg en svømmer via ID#");
+        intSelector = scanner.nextInt();
+        scanner.nextLine();
+        for (Swimmer swimmer:swimmers) {
+            if (intSelector == swimmer.getId()) {
+                selectedSwimmer = swimmer;
+            }
+        }
+
+        System.out.println("Hvilket stævne er resultatet fra?");
+        String competition = scanner.nextLine();
+
+        System.out.println("Vælg en stilart\n" +
+                "[1] Butterfly\n" +
+                "[2] Crawl\n" +
+                "[3] Rygsvømning\n" +
+                "[4] Brystsvømning\n" +
+                "[5] Hundesvømning");
+        SwimStyle style = null;
+        intSelector = scanner.nextInt();
+        scanner.nextLine();
+        switch (intSelector) {
+            case 1:
+                style = SwimStyle.BUTTERFLY;
+                break;
+
+            case 2:
+                style = SwimStyle.CRAWL;
+                break;
+
+            case 3:
+                style = SwimStyle.BACKSTROKE;
+                break;
+
+            case 4:
+                style = SwimStyle.BREASTSTROKE;
+                break;
+
+            case 5:
+                style = SwimStyle.DOG_PADDLE;
+                break;
+        }
+
+        System.out.println("Hvilken placering fik svømmeren?");
+        int placement = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Hvilken tid blev sat?");
+        double time = scanner.nextDouble();
+        scanner.nextLine();
+
+        selectedSwimmer.getCompetitionResults().add(new CompetitionResult(time,style,competition,placement));
+        fh.writeToFile(swimmers,"swimmers.txt");
+    }
+
+    //AUTHOR(S): ECS
     public void listArrears() {
         System.out.println("Disse svømmere er i restance:");
         for (Swimmer swimmer:swimmers) {
@@ -360,8 +422,7 @@ public class Container {
         scanner.nextLine();
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId() && !swimmer.isHasPaid()) {
-                selectedSwimmer = swimmer;
-                System.out.println("Har " + selectedSwimmer.getName() + " betalt sit kontingent? (y/N)");
+                System.out.println("Har " + swimmer.getName() + " betalt sit kontingent? (y/N)");
                 strSelector = scanner.nextLine();
                 switch (strSelector) {
                     case "y":

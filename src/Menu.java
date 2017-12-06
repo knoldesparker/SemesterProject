@@ -164,8 +164,10 @@ public class Menu {
                     "Velkommen " + user.getName() + "\n" +
                     "[1] Tilføj nye træningsresultater\n" +
                     "[2] Se liste over bedste svømmere\n" +
-                    "[3] Log ud\n" +
-                    "[4] Log ud og luk programmet");
+                    "[3] Tilføj stævneresultat\n" +
+                    "[4] Se Stævneresultater\n" +
+                    "[5] Log ud\n" +
+                    "[6] Log ud og luk programmet");
 
             selector = scanner.nextInt();
             scanner.nextLine();
@@ -222,10 +224,24 @@ public class Menu {
                     break;
 
                 case 3:
-                    isLoggedIn = false;
+                    container.addCompetitionResult();
                     break;
 
                 case 4:
+                    for (Swimmer swimmer:container.swimmers) {
+                        if ((swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR ||
+                                swimmer.getMembershipType() == MembershipType.COMPETITION_SENIOR) &&
+                                !swimmer.getCompetitionResults().isEmpty()) {
+                            System.out.println(swimmer.getName() + " - " + swimmer.getCompetitionResults());
+                        }
+                    }
+                    break;
+
+                case 5:
+                    isLoggedIn = false;
+                    break;
+
+                case 6:
                     isLoggedIn = false;
                     isRunning = false;
                     break;

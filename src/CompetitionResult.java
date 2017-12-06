@@ -3,12 +3,19 @@ import java.io.Serializable;
 public class CompetitionResult extends SwimResult implements Serializable{
     private String competition;
     private int position;
-    private SwimStyle style;
 
-    public CompetitionResult(double time, SwimStyle style, String competition, int position, SwimStyle style1) {
+    public CompetitionResult(double time, SwimStyle style, String competition, int position) {
         super(time, style);
         this.competition = competition;
         this.position = position;
-        this.style = style1;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "competition='" + competition + '\'' +
+                ", position=" + position +
+                ", " + super.toString() +
+                '}';
     }
 }
