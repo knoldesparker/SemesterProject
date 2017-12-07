@@ -14,6 +14,7 @@ public class UserContainer {
         return users;
     }
 
+    // Creates the users
     //AUTHOR(S): CPS
     private void initializeUsers() {
         users.add(new User("forman","1234", "Freja", UserRole.FOREMAN));

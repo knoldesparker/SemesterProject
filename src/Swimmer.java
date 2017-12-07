@@ -19,6 +19,7 @@ public class Swimmer implements Serializable {
     private ArrayList<CompetitionResult> competitionResults = new ArrayList<>();
     private boolean hasPaid = false;
 
+    // Custom constructor
     //AUTHOR(S): ECS, CPS, MHP, JHH
     public Swimmer(int id, String name, String address, int birthYear, MembershipType membershipType) {
         this.id = id;
@@ -28,12 +29,14 @@ public class Swimmer implements Serializable {
         this.age = LocalDate.now().getYear() - BIRTH_YEAR;
         this.membershipType = membershipType;
 
+        // Updates membership type to junior version if swimmer is under the age of 18
         if (age < 18 && this.membershipType == MembershipType.COMPETITION_SENIOR) {
             this.membershipType = MembershipType.COMPETITION_JUNIOR;
         } else if (age < 18 && this.membershipType == MembershipType.EXERCISE_SENIOR) {
             this.membershipType = MembershipType.EXERCISE_JUNIOR;
         }
 
+        // Sets the price depending on the age of the swimmer
         if (this.membershipType != MembershipType.PASSIVE) {
             if (age < 18) {
                 this.price = 1000;
@@ -43,23 +46,27 @@ public class Swimmer implements Serializable {
         } else {
             this.price = 500;
         }
-
         if (this.age >= 60) {
             this.price = this.price * 0.75;
         }
     }
 
+    // Updates the swimmer's personal bests
     //AUTHOR(S): ECS, CPS, MHP, JHH
     public void updatePB() {
+        // Looks through training results for personal bests
         for (TrainingResult tr:trainingResults) {
+            // Checks that the training result isn't too old
             if ((tr.getYear() == LocalDate.now().getYear() &&
                     tr.getDayOfYear() + 30 >= LocalDate.now().getDayOfYear()) ||
                     (LocalDate.now().getDayOfYear() < 30 &&
                             tr.getYear() + 1 == LocalDate.now().getYear() &&
                             tr.getDayOfYear() + 30 >= LocalDate.now().getDayOfYear() + 365)) {
                 if (tr.getStyle() == SwimStyle.BUTTERFLY) {
+                    // Sets the training result as personal best if there is none
                     if (butterflyPB == null || tr.getTime() < butterflyPB.getTime()) {
                         butterflyPB = tr;
+                    // Sets the training result as personal best if personal best is too old
                     } else if ((butterflyPB.getYear() == LocalDate.now().getYear() &&
                             butterflyPB.getDayOfYear() + 30 < LocalDate.now().getDayOfYear()) ||
                             (LocalDate.now().getDayOfYear() < 30 &&

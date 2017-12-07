@@ -14,37 +14,41 @@ public class Container {
     int dayOfYear;
     int year;
 
+    // This method is called in the menu. It creates a new swimmer and adds it to the list of swimmers
     //AUTHOR(S): MHP, ECS, CPS
     public void newSwimmer() {
+        // Parameters for Swimmer()
         int id = 0;
         int birthYear;
+        String name;
+        String address;
+        MembershipType membershipType = null;
 
-        System.out.println("Skriv venligst svømmerens navn: ");
-        String name = scanner.nextLine();
-        System.out.println("Skriv venligst svømmerens adresse: ");
-        String address = scanner.nextLine();
-        System.out.println("Skriv venligst svømmerens fødselsår: ");
+        System.out.println("Skriv venligst svømmerens navn:");
+        name = scanner.nextLine();
+        System.out.println("Skriv venligst svømmerens adresse:");
+        address = scanner.nextLine();
+        System.out.println("Skriv venligst svømmerens fødselsår:");
         try {
             birthYear = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
         System.out.println("Vælg venligst medlemskabstype:\n" +
                 "[1] Konkurrencesvømmer\n" +
                 "[2] Motionssvømmer\n" +
                 "[3] Passivt medlemskab: ");
         try {
-            intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+            intSelector = scanner.nextInt();            // Selector for the following switch statement
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
-        MembershipType membershipType = null;
 
         switch (intSelector) {
             case 1:
@@ -60,7 +64,7 @@ public class Container {
                 break;
         }
 
-        for (int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= 10000; i++) {          // This for loop grants the new swimmer an available ID#
             boolean idGood = true;
             for (Swimmer swimmer:swimmers) {
                 if (i == swimmer.getId()) {
@@ -78,19 +82,21 @@ public class Container {
         fh.writeToFile(swimmers, "swimmers.txt");
     }
 
+    // This method is called in the menu. It lets the the foreman edit swimmers
     //AUTHOR(S): ECS
     public void editSwimmer() {
         printSwimmers();
         System.out.println("Vælg en svømmer via ID#");
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
 
+        // Puts selected swimmer in temporary variable
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
@@ -105,11 +111,11 @@ public class Container {
                 "[4] Slet medlem");
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
         switch (intSelector) {
             case 1:
@@ -135,11 +141,11 @@ public class Container {
                         "[3] Passivt medlem");
                 try {
                     intSelector = scanner.nextInt();
-                } catch (InputMismatchException iME) {
+                } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
                     System.out.println("Invalid input");
                     return;
                 } finally {
-                    scanner.nextLine();
+                    scanner.nextLine();         // Workaround for the nextInt() bug
                 }
                 switch (intSelector) {
                     case 1:
@@ -166,6 +172,7 @@ public class Container {
                         break;
                 }
 
+                // Updates the price
                 if (selectedSwimmer.getMembershipType() != MembershipType.PASSIVE) {
                     if (selectedSwimmer.getAge() < 18) {
                         selectedSwimmer.setPrice(1000);
@@ -187,6 +194,7 @@ public class Container {
                 System.out.println("Er du sikker på, at du vil fjerne " + selectedSwimmer.getName() +
                         " fra systemet? (y/N)");
                 strSelector = scanner.nextLine();
+                // Defaults to not deleting, as this action is irreversible
                 switch (strSelector) {
                     case "y":
                         swimmers.remove(selectedSwimmer);
@@ -201,8 +209,10 @@ public class Container {
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    // This method is called in the menu. It lets the trainers add training results
     //AUTHOR(S): ECS, CPS
     public void addTrainingResults() {
+        // Parameters for TrainingResult()
         int daysSinceTraining = 0;
         double time;
 
@@ -216,6 +226,8 @@ public class Container {
         } finally {
             scanner.nextLine();
         }
+
+        // Puts selected swimmer in temporary variable
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
@@ -225,12 +237,14 @@ public class Container {
         System.out.println("Hvor mange dage siden blev tiden sat?");
         try {
             daysSinceTraining = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
+
+        // Calculates the date of the training result
         if (daysSinceTraining > LocalDate.now().getDayOfYear()) {
             year = LocalDate.now().getYear() - 1;
             dayOfYear = 365 + LocalDate.now().getDayOfYear() - daysSinceTraining;
@@ -248,11 +262,11 @@ public class Container {
         SwimStyle style = null;
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
         switch (intSelector) {
             case 1:
@@ -279,6 +293,8 @@ public class Container {
                 System.out.println("Invalid input");
                 break;
         }
+
+        // Stops the method if the input doesn't match one of the five switch cases
         if (style == null) {
             return;
         }
@@ -286,36 +302,39 @@ public class Container {
         System.out.println("Indtast den svømmede tid i sekunder med decimaler (brug punktum som komma");
         try {
             time = scanner.nextDouble();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
 
         selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dayOfYear, year));
         System.out.println(selectedSwimmer.getTrainingResults());
-        selectedSwimmer.updatePB();
+        selectedSwimmer.updatePB();         // Keeps the personal bests up to date
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    // This method is called in the menu. It prints the top five of a given age group and swim style to the console
     //AUTHOR(S): ECS
     public void listBestSwimmers(MembershipType ageGroup, SwimStyle style) {
-        Swimmer[] bestInClass = new Swimmer[5];
-        Swimmer[] bestInClassHelper;
+        Swimmer[] bestInClass = new Swimmer[5];         // The array that gets printed to the console
+        Swimmer[] bestInClassHelper;            // The helper array, which we use to bump swimmers down one spot
 
+        // Looks through all the swimmers for swimmers eligible for competition in the selected age group and swim style
         for (Swimmer swimmer:swimmers) {
             if (swimmer.getMembershipType() == ageGroup) {
                 switch (style) {
                     case BUTTERFLY:
+                        // Checks if the swimmer has a personal best in the selected swim style
                         if (swimmer.getButterflyPB() != null) {
-                            for (int i = 0; i < 5; i++) {
-                                if (bestInClass[i] == null) {
+                            for (int i = 0; i < 5; i++) {           // Looks through the array bestInClass
+                                if (bestInClass[i] == null) {           // Takes an open spot if available
                                     bestInClass[i] = swimmer;
                                     break;
-                                } else if (swimmer.getButterflyPB().getTime() <
-                                        bestInClass[i].getButterflyPB().getTime()) {
-                                    bestInClassHelper = bestInClass;
+                                } else if (swimmer.getButterflyPB().getTime() <         // Bumps swimmers down to make
+                                        bestInClass[i].getButterflyPB().getTime()) {    //  room for the new swimmer, if
+                                    bestInClassHelper = bestInClass;                    //  (s)he's faster
                                     for (int j = 3; j >= i; j--) {
                                         bestInClass[j+1] = bestInClassHelper[j];
                                     }
@@ -404,32 +423,39 @@ public class Container {
                 }
             }
         }
+
+        // Prints the top 5 to the console
         for (Swimmer competitor:bestInClass) {
             System.out.println(competitor);
         }
     }
 
+    // This method is called in the menu. It lets the trainers add competition results
     //AUTHOR(S): ECS
     public void addCompetitionResult() {
         SwimStyle style = null;
         int placement;
         double time;
 
+        // Prints all the competition swimmers to the console
         for (Swimmer swimmer:swimmers) {
             if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR ||
                     swimmer.getMembershipType() == MembershipType.COMPETITION_SENIOR) {
                 System.out.println(swimmer);
             }
         }
+
         System.out.println("Vælg en svømmer via ID#");
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invlid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
+
+        // Puts selected swimmer in temporary variable
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
@@ -447,11 +473,11 @@ public class Container {
                 "[5] Hundesvømning");
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
         switch (intSelector) {
             case 1:
@@ -478,27 +504,28 @@ public class Container {
         System.out.println("Hvilken placering fik svømmeren?");
         try {
             placement = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
 
         System.out.println("Hvilken tid blev sat?");
         try {
             time = scanner.nextDouble();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
 
         selectedSwimmer.getCompetitionResults().add(new CompetitionResult(time,style,competition,placement));
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    // This method is called in the menu. It prints a list of the swimmers, who haven't paid, to the console
     //AUTHOR(S): ECS
     public void listArrears() {
         System.out.println("Disse svømmere er i restance:");
@@ -511,21 +538,25 @@ public class Container {
         System.out.println();
     }
 
+    // This method is called in the menu. It lets the cashiers edit arrears status of the swimmers
     //AUTHOR(S): ECS, CPS
     public void editArrears() {
         System.out.println("Vælg en svømmer via ID#");
         try {
             intSelector = scanner.nextInt();
-        } catch (InputMismatchException iME) {
+        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             System.out.println("Invalid input");
             return;
         } finally {
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
         }
+
+        // Executes the above selection
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId() && !swimmer.isHasPaid()) {
                 System.out.println("Har " + swimmer.getName() + " betalt sit kontingent? (y/N)");
                 strSelector = scanner.nextLine();
+                // Defaults to not updating hasPaid, as this action is irreversible
                 switch (strSelector) {
                     case "y":
                         swimmer.setHasPaid(true);
@@ -540,6 +571,7 @@ public class Container {
         fh.writeToFile(swimmers,"swimmers.txt");
     }
 
+    // Prints the arrayList of all swimmers to the console in a prettier way
     //AUTHOR(S): ECS
     public void printSwimmers() {
         for (Swimmer swimmer:swimmers) {
@@ -547,27 +579,35 @@ public class Container {
         }
     }
 
+    // This method is called when the program is started. It updates age, membership type and arrears status of swimmers
     //AUTHOR(S): ECS
     public void updateSwimmer() {
         for (Swimmer swimmer:swimmers) {
-            int oldAge = swimmer.getAge();
-            swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTH_YEAR());
-            if (oldAge < 18 && swimmer.getAge() >= 18) {
-                if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR) {
-                    swimmer.setMembershipType(MembershipType.COMPETITION_SENIOR);
-                    swimmer.setPrice(1600);
+            int oldAge = swimmer.getAge();          // Variable for checking if anything happened
+            swimmer.setAge(LocalDate.now().getYear() - swimmer.getBIRTH_YEAR());            // Updates age
+
+            // If
+            if (oldAge != swimmer.getAge()) {           // Makes sure that it only executes if age was changed
+                swimmer.setHasPaid(false);          // Resets arrears
+
+                // Updates membership type if relevant
+                if (oldAge < 18 && swimmer.getAge() >= 18) {
+                    if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR) {
+                        swimmer.setMembershipType(MembershipType.COMPETITION_SENIOR);
+                        swimmer.setPrice(1600);
+                        System.out.println("OBS!\n" +
+                                swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
+                    } else if (swimmer.getMembershipType() == MembershipType.EXERCISE_JUNIOR) {
+                        swimmer.setMembershipType(MembershipType.EXERCISE_SENIOR);
+                        swimmer.setPrice(1600);
+                        System.out.println("OBS!\n" +
+                                swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
+                    }
+                } else if (oldAge < 60 && swimmer.getAge() >= 60) {
+                    swimmer.setPrice(swimmer.getPrice() * 0.75);
                     System.out.println("OBS!\n" +
-                            swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
-                } else if (swimmer.getMembershipType() == MembershipType.EXERCISE_JUNIOR) {
-                    swimmer.setMembershipType(MembershipType.EXERCISE_SENIOR);
-                    swimmer.setPrice(1600);
-                    System.out.println("OBS!\n" +
-                            swimmer.getName() + "er fyld 18, og er blevet ændret til senior!\n");
+                            swimmer.getName() + "har fået tildelt aldersrabat\n");
                 }
-            } else if (oldAge < 60 && swimmer.getAge() >= 60) {
-                swimmer.setPrice(swimmer.getPrice() * 0.75);
-                System.out.println("OBS!\n" +
-                        swimmer.getName() + "har fået tildelt aldersrabat\n");
             }
         }
         fh.writeToFile(swimmers,"swimmers.txt");

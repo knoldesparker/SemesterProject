@@ -12,6 +12,7 @@ public class Menu {
     private User user = null;
     Container container = new Container();
 
+    // This is where it all begins
     //AUTHOR(S): CPS, ECS
     public void mainMenu() {
         container.updateSwimmer();
@@ -34,9 +35,9 @@ public class Menu {
                     "[2] Luk programmet");
             try {
                 selector = scanner.nextInt();
-            } catch (InputMismatchException iME) {
+            } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
             }
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
             switch (selector) {
                 case 1:
                     System.out.println("Indtast Brugernavn:");
@@ -45,10 +46,12 @@ public class Menu {
                     String validUserPass = scanner.nextLine();
                     try {
                         user = userLogin(validUserName, validUserPass);
-                    } catch (IllegalArgumentException eIA) {
-                        System.out.println("Forkert brugernavn eller password");
+                    } catch (IllegalArgumentException eIA) {                        // Makes sure it doesn't crash when
+                        System.out.println("Forkert brugernavn eller password");    //  login is invalid
                         continue;
                     }
+
+                    // Goes to the menu that corresponds to the user, who logged in
                     if (user.getUserRole() == UserRole.FOREMAN) {
                         makeForemanMenu();
                     } else if (user.getUserRole() == UserRole.CASHIER) {
@@ -69,8 +72,8 @@ public class Menu {
         }
     }
 
+    // Returns a user if login is valid. Throws exception if not
     //AUTHOR(S): CPS
-    //returnerer kunde hvis korrekt, returnerer null hvis forkert
     public User userLogin (String username, String userpass) {
         ArrayList<User> users = userContainer.getUsers();
         for (int i = 0; i < users.size() ; i++) {
@@ -86,6 +89,7 @@ public class Menu {
         throw new IllegalArgumentException();
     }
 
+    // Menu for the foreman
     //AUTHOR(S): CPS, ECS
     public void makeForemanMenu () {
         isLoggedIn = true;
@@ -100,10 +104,10 @@ public class Menu {
 
             try {
             selector = scanner.nextInt();
-            } catch (InputMismatchException iME) {
+            } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
                 selector = -1;
             }
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
             switch (selector) {
                 case 1:
                     System.out.println("Opret medlem");
@@ -136,6 +140,7 @@ public class Menu {
         }
     }
 
+    // Menu for the cashiers
     //AUTHOR(S): CPS, ECS
     public void makeCashierMenu() {
         isLoggedIn = true;
@@ -149,10 +154,10 @@ public class Menu {
 
             try {
             selector = scanner.nextInt();
-            } catch (InputMismatchException iME) {
+            } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
                 selector = -1;
             }
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
             switch (selector) {
                 case 1:
                     System.out.println("Ret restance");
@@ -182,6 +187,7 @@ public class Menu {
 
     }
 
+    // Menu for the trainers
     //AUTHOR(S): CPS, ECS
     public void makeTrainerMenu () {
         isLoggedIn = true;
@@ -197,17 +203,17 @@ public class Menu {
 
             try {
             selector = scanner.nextInt();
-            } catch (InputMismatchException iME) {
+            } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't an int
                 selector = -1;
             }
-            scanner.nextLine();
+            scanner.nextLine();         // Workaround for the nextInt() bug
             switch (selector) {
                 case 1:
                     container.addTrainingResults();
                     break;
 
                 case 2:
-                    MembershipType ageGroupSelector = null;
+                    MembershipType ageGroupSelector = null;         // Parameter for listBestSwimmers()
 
                     isSelecting = true;
                     while (isSelecting) {
@@ -216,10 +222,10 @@ public class Menu {
                                 "[2] senior");
                         try {
                             selector = scanner.nextInt();
-                        } catch (InputMismatchException iME) {
-                            selector = -1;
+                        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't
+                            selector = -1;                              //  an int
                         }
-                        scanner.nextLine();
+                        scanner.nextLine();         // Workaround for the nextInt() bug
                         switch (selector) {
                             case 1:
                                 ageGroupSelector = MembershipType.COMPETITION_JUNIOR;
@@ -247,10 +253,10 @@ public class Menu {
                                 "[5] Hundesvømning");
                         try {
                             selector = scanner.nextInt();
-                        } catch (InputMismatchException iME) {
-                            selector = -1;
+                        } catch (InputMismatchException iME) {          // Makes sure it doesn't crash when input isn't
+                            selector = -1;                              //  an int
                         }
-                        scanner.nextLine();
+                        scanner.nextLine();         // Workaround for the nextInt() bug
 
                         switch (selector) {
                             case 1:
@@ -289,6 +295,7 @@ public class Menu {
                     break;
 
                 case 4:
+                    // Prints swimmers with competition results
                     for (Swimmer swimmer:container.swimmers) {
                         if ((swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR ||
                                 swimmer.getMembershipType() == MembershipType.COMPETITION_SENIOR) &&
