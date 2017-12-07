@@ -13,7 +13,20 @@ public class Menu {
     //AUTHOR(S): CPS, ECS
     public void mainMenu() {
         container.updateSwimmer();
-        System.out.println("#Velkommen til Svømmeklubben Delfinens Administationssystem#");
+        // Splash screen copied from ascii.co.uk/art/dolphin
+        System.out.println("            __|\\\n" +
+                "         .-'    '-.\n" +
+                "        / .--, _ a L\n" +
+                "      .J (  '-' \"'--'\n" +
+                "     '-'-.)  .~~~~~~~~~~~~~~~~~~~~.\n" +
+                "             |   Velkommen  til   |     __\n" +
+                "             |      Delfinen      | ,.-'e ''-'7\n" +
+                "             |     svømmeklub     |  '--.    (\n" +
+                "             |                    |      ),   \\\n" +
+                "             '~~~~~~~~~~~~~~~~~~~~'      ` )  :\n" +
+                "                                      ,__.'_.'\n" +
+                "                                      '-, (\n" +
+                "                                        '--'");
         while (isRunning) {
             System.out.println("[1] Log ind\n" +
                     "[2] Luk programmet");
