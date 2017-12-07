@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
     private int selector;
     private boolean isRunning = true;
-    boolean isLoggedIn = false;
+    private boolean isLoggedIn = false;
+    private boolean isSelecting = false;
     private Scanner scanner = new Scanner(System.in);
     private UserContainer userContainer = new UserContainer();
     private User user = null;
@@ -13,7 +15,7 @@ public class Menu {
     //AUTHOR(S): CPS, ECS
     public void mainMenu() {
         container.updateSwimmer();
-        // Splash screen copied from ascii.co.uk/art/dolphin
+        // Splash screen ASCII dolphins copied from ascii.co.uk/art/dolphin
         System.out.println("            __|\\\n" +
                 "         .-'    '-.\n" +
                 "        / .--, _ a L\n" +
@@ -30,7 +32,10 @@ public class Menu {
         while (isRunning) {
             System.out.println("[1] Log ind\n" +
                     "[2] Luk programmet");
-            selector = scanner.nextInt();
+            try {
+                selector = scanner.nextInt();
+            } catch (InputMismatchException iME) {
+            }
             scanner.nextLine();
             switch (selector) {
                 case 1:
@@ -93,7 +98,11 @@ public class Menu {
                     "[4] Log ud\n" +
                     "[5] Log ud og luk programmet");
 
+            try {
             selector = scanner.nextInt();
+            } catch (InputMismatchException iME) {
+                selector = -1;
+            }
             scanner.nextLine();
             switch (selector) {
                 case 1:
@@ -138,7 +147,11 @@ public class Menu {
                     "[3] Log ud\n" +
                     "[4] Log ud og luk programmet");
 
+            try {
             selector = scanner.nextInt();
+            } catch (InputMismatchException iME) {
+                selector = -1;
+            }
             scanner.nextLine();
             switch (selector) {
                 case 1:
@@ -182,7 +195,11 @@ public class Menu {
                     "[5] Log ud\n" +
                     "[6] Log ud og luk programmet");
 
+            try {
             selector = scanner.nextInt();
+            } catch (InputMismatchException iME) {
+                selector = -1;
+            }
             scanner.nextLine();
             switch (selector) {
                 case 1:
@@ -190,49 +207,80 @@ public class Menu {
                     break;
 
                 case 2:
-                    System.out.println("Vælg en aldersgruppe:\n" +
-                            "[1] Junior\n" +
-                            "[2] senior");
-                    selector = scanner.nextInt();
-                    MembershipType ageGroupSelector;
-                    switch (selector) {
-                        case 1:
-                            ageGroupSelector = MembershipType.COMPETITION_JUNIOR;
-                            break;
+                    MembershipType ageGroupSelector = null;
 
-                        default:
-                            ageGroupSelector = MembershipType.COMPETITION_SENIOR;
-                            break;
+                    isSelecting = true;
+                    while (isSelecting) {
+                        System.out.println("Vælg en aldersgruppe:\n" +
+                                "[1] Junior\n" +
+                                "[2] senior");
+                        try {
+                            selector = scanner.nextInt();
+                        } catch (InputMismatchException iME) {
+                            selector = -1;
+                        }
+                        scanner.nextLine();
+                        switch (selector) {
+                            case 1:
+                                ageGroupSelector = MembershipType.COMPETITION_JUNIOR;
+                                isSelecting = false;
+                                break;
+
+                            case 2:
+                                ageGroupSelector = MembershipType.COMPETITION_SENIOR;
+                                isSelecting = false;
+                                break;
+
+                            default:
+                                System.out.println("Invalid input");
+                                break;
+                        }
                     }
 
-                    System.out.println("Vælg en svømmestil:\n" +
-                            "[1] Butterfly\n" +
-                            "[2] Crawl\n" +
-                            "[3] Rygsvømning\n" +
-                            "[4] Brystsvømning\n" +
-                            "[5] Hundesvømning");
-                    selector = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (selector) {
-                        case 1:
-                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BUTTERFLY);
-                            break;
+                    isSelecting = true;
+                    while (isSelecting) {
+                        System.out.println("Vælg en svømmestil:\n" +
+                                "[1] Butterfly\n" +
+                                "[2] Crawl\n" +
+                                "[3] Rygsvømning\n" +
+                                "[4] Brystsvømning\n" +
+                                "[5] Hundesvømning");
+                        try {
+                            selector = scanner.nextInt();
+                        } catch (InputMismatchException iME) {
+                            selector = -1;
+                        }
+                        scanner.nextLine();
 
-                        case 2:
-                            container.listBestSwimmers(ageGroupSelector,SwimStyle.CRAWL);
-                            break;
+                        switch (selector) {
+                            case 1:
+                                container.listBestSwimmers(ageGroupSelector, SwimStyle.BUTTERFLY);
+                                isSelecting = false;
+                                break;
 
-                        case 3:
-                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BACKSTROKE);
-                            break;
+                            case 2:
+                                container.listBestSwimmers(ageGroupSelector, SwimStyle.CRAWL);
+                                isSelecting = false;
+                                break;
 
-                        case 4:
-                            container.listBestSwimmers(ageGroupSelector,SwimStyle.BREASTSTROKE);
-                            break;
+                            case 3:
+                                container.listBestSwimmers(ageGroupSelector, SwimStyle.BACKSTROKE);
+                                isSelecting = false;
+                                break;
 
-                        case 5:
-                            container.listBestSwimmers(ageGroupSelector,SwimStyle.DOG_PADDLE);
-                            break;
+                            case 4:
+                                container.listBestSwimmers(ageGroupSelector, SwimStyle.BREASTSTROKE);
+                                isSelecting = false;
+                                break;
+
+                            case 5:
+                                container.listBestSwimmers(ageGroupSelector, SwimStyle.DOG_PADDLE);
+                                isSelecting = false;
+                                break;
+
+                            default:
+                                System.out.println("Invalid Input");
+                        }
                     }
                     break;
 

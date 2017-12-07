@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Container {
@@ -16,20 +17,33 @@ public class Container {
     //AUTHOR(S): MHP, ECS, CPS
     public void newSwimmer() {
         int id = 0;
+        int birthYear;
 
         System.out.println("Skriv venligst svømmerens navn: ");
         String name = scanner.nextLine();
         System.out.println("Skriv venligst svømmerens adresse: ");
         String address = scanner.nextLine();
         System.out.println("Skriv venligst svømmerens fødselsår: ");
-        int birthYear = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            birthYear = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         System.out.println("Vælg venligst medlemskabstype:\n" +
                 "[1] Konkurrencesvømmer\n" +
                 "[2] Motionssvømmer\n" +
                 "[3] Passivt medlemskab: ");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         MembershipType membershipType = null;
 
         switch (intSelector) {
@@ -68,8 +82,14 @@ public class Container {
     public void editSwimmer() {
         printSwimmers();
         System.out.println("Vælg en svømmer via ID#");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
 
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
@@ -83,8 +103,14 @@ public class Container {
                 "[2] Adresse\n" +
                 "[3] Medlemskabstype\n" +
                 "[4] Slet medlem");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         switch (intSelector) {
             case 1:
                 String oldName = selectedSwimmer.getName();
@@ -107,7 +133,14 @@ public class Container {
                         "[1] Konkurrencesvømmer\n" +
                         "[2] Motionssvømmer\n" +
                         "[3] Passivt medlem");
-                intSelector = scanner.nextInt();
+                try {
+                    intSelector = scanner.nextInt();
+                } catch (InputMismatchException iME) {
+                    System.out.println("Invalid input");
+                    return;
+                } finally {
+                    scanner.nextLine();
+                }
                 switch (intSelector) {
                     case 1:
                         if (selectedSwimmer.getAge() < 18) {
@@ -170,10 +203,19 @@ public class Container {
 
     //AUTHOR(S): ECS, CPS
     public void addTrainingResults() {
+        int daysSinceTraining = 0;
+        double time;
+
         printSwimmers();
         System.out.println("Vælg en svømmer via ID#");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Ivalid swimmer ID#");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
@@ -181,7 +223,14 @@ public class Container {
         }
 
         System.out.println("Hvor mange dage siden blev tiden sat?");
-        int daysSinceTraining = scanner.nextInt();
+        try {
+            daysSinceTraining = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         if (daysSinceTraining > LocalDate.now().getDayOfYear()) {
             year = LocalDate.now().getYear() - 1;
             dayOfYear = 365 + LocalDate.now().getDayOfYear() - daysSinceTraining;
@@ -197,8 +246,14 @@ public class Container {
                 "[4] Brystsvømning\n" +
                 "[5] Hundesvømning");
         SwimStyle style = null;
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         switch (intSelector) {
             case 1:
                 style = SwimStyle.BUTTERFLY;
@@ -219,10 +274,24 @@ public class Container {
             case 5:
                 style = SwimStyle.DOG_PADDLE;
                 break;
+
+            default:
+                System.out.println("Invalid input");
+                break;
+        }
+        if (style == null) {
+            return;
         }
 
-        System.out.println("Indtast den svømmede tid i sekunder med decimaler");
-        double time = scanner.nextDouble();
+        System.out.println("Indtast den svømmede tid i sekunder med decimaler (brug punktum som komma");
+        try {
+            time = scanner.nextDouble();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
 
         selectedSwimmer.getTrainingResults().add(new TrainingResult(time, style, dayOfYear, year));
         System.out.println(selectedSwimmer.getTrainingResults());
@@ -342,6 +411,10 @@ public class Container {
 
     //AUTHOR(S): ECS
     public void addCompetitionResult() {
+        SwimStyle style = null;
+        int placement;
+        double time;
+
         for (Swimmer swimmer:swimmers) {
             if (swimmer.getMembershipType() == MembershipType.COMPETITION_JUNIOR ||
                     swimmer.getMembershipType() == MembershipType.COMPETITION_SENIOR) {
@@ -349,8 +422,14 @@ public class Container {
             }
         }
         System.out.println("Vælg en svømmer via ID#");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invlid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId()) {
                 selectedSwimmer = swimmer;
@@ -366,9 +445,14 @@ public class Container {
                 "[3] Rygsvømning\n" +
                 "[4] Brystsvømning\n" +
                 "[5] Hundesvømning");
-        SwimStyle style = null;
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         switch (intSelector) {
             case 1:
                 style = SwimStyle.BUTTERFLY;
@@ -392,12 +476,24 @@ public class Container {
         }
 
         System.out.println("Hvilken placering fik svømmeren?");
-        int placement = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            placement = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
 
         System.out.println("Hvilken tid blev sat?");
-        double time = scanner.nextDouble();
-        scanner.nextLine();
+        try {
+            time = scanner.nextDouble();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
 
         selectedSwimmer.getCompetitionResults().add(new CompetitionResult(time,style,competition,placement));
         fh.writeToFile(swimmers,"swimmers.txt");
@@ -418,8 +514,14 @@ public class Container {
     //AUTHOR(S): ECS, CPS
     public void editArrears() {
         System.out.println("Vælg en svømmer via ID#");
-        intSelector = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            intSelector = scanner.nextInt();
+        } catch (InputMismatchException iME) {
+            System.out.println("Invalid input");
+            return;
+        } finally {
+            scanner.nextLine();
+        }
         for (Swimmer swimmer:swimmers) {
             if (intSelector == swimmer.getId() && !swimmer.isHasPaid()) {
                 System.out.println("Har " + swimmer.getName() + " betalt sit kontingent? (y/N)");
